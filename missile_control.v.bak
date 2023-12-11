@@ -1,0 +1,120 @@
+module missile_control(
+	input clk,
+	input rst,
+	
+	output reg [1:0]grid_A1, grid_A2, grid_A3, grid_B1, grid_B2, grid_B3, grid_C1, grid_C2, grid_C3, 
+	
+	// VGA outputs
+	output [9:0]VGA_R,
+	output [9:0]VGA_G,
+	output [9:0]VGA_B,
+	output VGA_HS,
+	output VGA_VS,
+	output VGA_BLANK,
+	output VGA_SYNC,
+	output VGA_CLK
+	);
+	
+// variables used for vga
+reg plot = 1'b1; 
+reg [31:0]x;
+reg [31:0]y;
+reg [2:0]color;
+reg back_color = 3'b000;
+
+// counter variables used for displaying
+reg [31:0]count_x;
+reg [31:0]count_y;
+
+vga_adapter my_vga(rst, clk, color, x, y, plot, VGA_R, VGA_G, VGA_B, VGA_HS, VGA_VS, VGA_BLANK, VGA_SYNC, VGA_CLK);
+
+// Grid:
+	//       1    2    3
+	//    |----|----|----|
+	//    |    |    |    |
+	//  A | A1 | A2 | A3 |
+	//    |    |    |    |
+	//    -----|----|-----
+	//    |    |    |    |
+	//  B | B1 | B2 | B3 |
+	//    |    |    |    |
+	//    -----|----|-----
+	//    |    |    |    |
+	//  C | C1 | C2 | C3 |
+	//    |    |    |    |
+	//    |----|----|----|
+	
+// grid sqaures
+parameter A1 = 9'b100000000,
+			 A2 = 9'b010000000,
+			 A3 = 9'b001000000,
+			 B1 = 9'b000100000,
+			 B2 = 9'b000010000,
+			 B3 = 9'b000001000,
+			 C1 = 9'b000000100,
+			 C2 = 9'b000000010,
+			 C3 = 9'b000000001;
+			 
+// variables to be used
+reg valid;
+reg [1:0]user;
+reg [2:0]outcome;
+reg [2:0]A1_color, A2_color, A3_color, B1_color, B2_color, B3_color, C1_color, C2_color, C3_color;
+
+// grid color parameters
+parameter p1_color = 3'b010,
+			 p2_color = 3'b101,
+			 default_color = 3'b111;
+			 
+			 
+reg [2:0]S;
+reg [2:0]NS;
+
+
+parameter INIT = 8'd0,
+				DISPLAY = 8'd1,
+				DONE = 8'd2,
+				ERROR = 8'hF;
+				
+				
+				
+always @(posedge clk or negedge rst)
+begin
+	if (rst == 1'b0)
+		S <= INIT;
+	else
+		S <= NS;
+end
+
+always@(*)
+begin
+	case(S) 
+	
+		INIT:
+			NS = DISPLAY;
+			
+		DISPLAY:
+			NS = DONE;
+			
+		DONE:
+			NS = DONE;
+			
+		default:
+			NS = ERROR;
+	
+	endcase
+end
+
+
+always @(posedge clk or negedge rst)
+begin
+	if (rst == 1'b0)
+	begin
+	end
+	
+	else
+	begin
+	end
+
+end
+
