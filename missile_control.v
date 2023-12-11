@@ -1,6 +1,6 @@
 module missile_control(
 
-// top level module for project
+	// top level module for project
 	input clk, 
 	input rst,
 	
@@ -31,13 +31,11 @@ module missile_control(
 				 
 	// variables to be used
 	reg valid;
-	reg [1:0]user;
-	reg [2:0]outcome;
 	reg [2:0]A1_color;
 	
 	// grid color parameters
-	parameter p1_color = 3'b010,
-	          p2_color = 3'b101,
+	parameter city_color = 3'b010,
+	          missile_color = 3'b101,
 	          default_color = 3'b111;
 	
 	// state variables for FSM
@@ -66,6 +64,24 @@ module missile_control(
 		BACK_GRAPH_DRAW = 8'd12,
 		BACK_GRAPH_END = 8'd13,
 		
+		// missile launcher graphics
+		LAUNCHER_START = 8'd14,
+		LAUNCHER_CHECK_Y = 8'd15,
+		LAUNCHER_CHECK_X = 8'd16,
+		LAUNCHER_UPDATE_Y = 8'd17,
+		LAUNCHER_UPDATE_X = 8'd18,
+		LAUNCHER_DRAW = 8'd19,
+		LAUNCHER_END = 8'd20,
+		
+		// City graphics
+		CITY_START = 8'd21,
+		CITY_CHECK_Y = 8'd22,
+		CITY_CHECK_X = 8'd23,
+		CITY_UPDATE_Y = 8'd24,
+		CITY_UPDATE_X = 8'd25,
+		CITY_DRAW = 8'd26,
+		CITY_END = 8'd27,
+		
 		DONE = 8'd71,
 		
 		ERROR = 8'hF;
@@ -79,14 +95,14 @@ module missile_control(
 			S <= NS;
 	end
 	
-	// state travel chart
+	
 	always @(*)
 	begin
 	
 		case(S)
 			INIT: NS = BACK_START;
 			
-			// Background 
+			// Background fill
 			// ------------------------------------------------------------------
 			BACK_START: NS = BACK_CHECK_Y;
 			
@@ -123,12 +139,12 @@ module missile_control(
 			BACK_END: NS = BACK_GRAPH_START;
 			
 			
-			// Background graphics (ground line)
+			// Background graphics (ground)
 			// ---------------------------------------------------------------------
 			BACK_GRAPH_START: NS = BACK_GRAPH_CHECK_Y;
 			BACK_GRAPH_CHECK_Y: 
 			begin
-				if (count_y < 215)
+				if (count_y < 240)
 				begin
 					NS = BACK_GRAPH_CHECK_X;
 				end
@@ -152,6 +168,66 @@ module missile_control(
 			BACK_GRAPH_UPDATE_X: NS = BACK_GRAPH_CHECK_X;
 			BACK_GRAPH_DRAW: NS = BACK_GRAPH_UPDATE_X;
 			BACK_GRAPH_END: NS = DONE;
+			
+			// Missile launcher graphics (raised platform)
+			// ---------------------------------------------------------------------
+			LAUNCHER_START: NS = LAUNCHER_CHECK_Y;
+			LAUNCHER_CHECK_Y: 
+			begin
+				if (count_y < 210)
+				begin
+					NS = LAUNCHER_CHECK_X;
+				end
+				else
+				begin
+					NS = LAUNCHER_END;
+				end
+			end
+			LAUNCHER_CHECK_X:
+			begin
+				if (count_x < 168)
+				begin
+					NS = LAUNCHER_DRAW;
+				end
+				else
+				begin
+					NS = LAUNCHER_UPDATE_Y;
+				end
+			end
+			LAUNCHER_UPDATE_Y: NS = LAUNCHER_CHECK_Y;
+			LAUNCHER_UPDATE_X: NS = LAUNCHER_CHECK_X;
+			LAUNCHER_DRAW: NS = LAUNCHER_UPDATE_X;
+			LAUNCHER_END: NS = DONE;
+			
+			// City graphics
+			// ---------------------------------------------------------------------
+			CITY_START: NS = CITY_CHECK_Y;
+			CITY_CHECK_Y: 
+			begin
+				if (count_y < 32'd210)
+				begin
+					NS = CITY_CHECK_X;
+				end
+				else
+				begin
+					NS = CITY_END;
+				end
+			end
+			CITY_CHECK_X:
+			begin
+				if ((count_x < 32'd242 & count_y < 32'd206) | (count_x < 32'd245 & count_y < 32'd210))
+				begin
+					NS = CITY_DRAW;
+				end
+				else
+				begin
+					NS = CITY_UPDATE_Y;
+				end
+			end
+			CITY_UPDATE_Y: NS = CITY_CHECK_Y;
+			CITY_UPDATE_X: NS = CITY_CHECK_X;
+			CITY_DRAW: NS = CITY_UPDATE_X;
+			CITY_END: NS = DONE;
 	
 			
 			default: NS = ERROR;
@@ -197,6 +273,7 @@ module missile_control(
 				end
 				
 				// background
+				// ---------------------------------------------------------------------
 				BACK_START:
 				begin
 					count_x <= 32'd0;
@@ -218,7 +295,8 @@ module missile_control(
 					y <= count_y;
 				end
 				
-				// A1
+				// Background graphics (ground)
+				// ---------------------------------------------------------------------
 				BACK_GRAPH_START:
 				begin
 					count_x <= 32'd0;
@@ -234,6 +312,55 @@ module missile_control(
 					count_x <= count_x + 32'd1;
 				end
 				BACK_GRAPH_DRAW:
+				begin
+					color <= A1_color;
+					x <= count_x;
+					y <= count_y;
+				end
+				
+				// Missile launcher graphics
+				// ---------------------------------------------------------------------
+				LAUNCHER_START:
+				begin
+					count_x <= 32'd152;
+					count_y <= 32'd200;
+				end
+				LAUNCHER_UPDATE_Y:
+				begin
+					count_y <= count_y + 32'd1;
+					count_x <= 32'd152;
+				end
+				LAUNCHER_UPDATE_X:
+				begin
+					count_x <= count_x + 32'd1;
+				end
+				LAUNCHER_DRAW:
+				begin
+					color <= A1_color;
+					x <= count_x;
+					y <= count_y;
+				end
+				
+				// City graphics
+				// ---------------------------------------------------------------------
+				CITY_START:
+				begin
+					count_x <= 32'd78;
+					count_y <= 32'd203;
+				end
+				CITY_UPDATE_Y:
+				begin
+					count_y <= count_y + 32'd1;
+					if (count_y < 32'd206)
+						count_x <= 32'd78;
+					else
+						count_x <= 32'd75;
+				end
+				CITY_UPDATE_X:
+				begin
+					count_x <= count_x + 32'd1;
+				end
+				CITY_DRAW:
 				begin
 					color <= A1_color;
 					x <= count_x;
