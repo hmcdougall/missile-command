@@ -81,10 +81,15 @@ module missile_control(
 		CITY_UPDATE_X = 8'd25,
 		CITY_DRAW = 8'd26,
 		CITY_END = 8'd27,
-		
+
 		DONE = 8'd71,
 		
 		ERROR = 8'hF;
+		
+		
+	reg [31:0] city1_x = 32'd80;
+	reg [31:0] city1_y = 32'd210;
+	city city1(clk, rst, city1_x, city1_y, city_color, status_city1, out_x, out_y, out_color, city1_done);
 			
 			
 	always @(posedge clk or negedge rst)
@@ -167,7 +172,7 @@ module missile_control(
 			BACK_GRAPH_UPDATE_Y: NS = BACK_GRAPH_CHECK_Y;
 			BACK_GRAPH_UPDATE_X: NS = BACK_GRAPH_CHECK_X;
 			BACK_GRAPH_DRAW: NS = BACK_GRAPH_UPDATE_X;
-			BACK_GRAPH_END: NS = DONE;
+			BACK_GRAPH_END: NS = LAUNCHER_START;
 			
 			// Missile launcher graphics (raised platform)
 			// ---------------------------------------------------------------------
@@ -197,36 +202,18 @@ module missile_control(
 			LAUNCHER_UPDATE_Y: NS = LAUNCHER_CHECK_Y;
 			LAUNCHER_UPDATE_X: NS = LAUNCHER_CHECK_X;
 			LAUNCHER_DRAW: NS = LAUNCHER_UPDATE_X;
-			LAUNCHER_END: NS = DONE;
+			LAUNCHER_END: NS = CITY_START;
 			
 			// City graphics
 			// ---------------------------------------------------------------------
-			CITY_START: NS = CITY_CHECK_Y;
-			CITY_CHECK_Y: 
+			CITY_START: NS = CITY_DRAW;
+			CITY_DRAW:
 			begin
-				if (count_y < 32'd210)
-				begin
-					NS = CITY_CHECK_X;
-				end
-				else
-				begin
-					NS = CITY_END;
-				end
-			end
-			CITY_CHECK_X:
-			begin
-				if ((count_x < 32'd242 & count_y < 32'd206) | (count_x < 32'd245 & count_y < 32'd210))
-				begin
+				if (city1_done != 1'b1)
 					NS = CITY_DRAW;
-				end
-				else
-				begin
-					NS = CITY_UPDATE_Y;
-				end
+				else 
+					NS = CITY_END;
 			end
-			CITY_UPDATE_Y: NS = CITY_CHECK_Y;
-			CITY_UPDATE_X: NS = CITY_CHECK_X;
-			CITY_DRAW: NS = CITY_UPDATE_X;
 			CITY_END: NS = DONE;
 	
 			
@@ -343,30 +330,12 @@ module missile_control(
 				
 				// City graphics
 				// ---------------------------------------------------------------------
-				CITY_START:
-				begin
-					count_x <= 32'd78;
-					count_y <= 32'd203;
-				end
-				CITY_UPDATE_Y:
-				begin
-					count_y <= count_y + 32'd1;
-					if (count_y < 32'd206)
-						count_x <= 32'd78;
-					else
-						count_x <= 32'd75;
-				end
-				CITY_UPDATE_X:
-				begin
-					count_x <= count_x + 32'd1;
-				end
 				CITY_DRAW:
 				begin
-					color <= A1_color;
-					x <= count_x;
-					y <= count_y;
+					color <= out_color;
+					x <= out_x;
+					y <= out_y;
 				end
-				
 				
 				
 				ERROR:
