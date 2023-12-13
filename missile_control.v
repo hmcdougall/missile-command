@@ -17,6 +17,7 @@ module missile_control(
 	);
 	
 	// variables used for vga
+	//---------------------------------------------------------------
 	reg plot = 1'b1; 
 	reg [31:0]x;
 	reg [31:0]y;
@@ -28,9 +29,7 @@ module missile_control(
 	reg [31:0]count_y;
 	
 	vga_adapter my_vga(rst, clk, color, x, y, plot, VGA_R, VGA_G, VGA_B, VGA_HS, VGA_VS, VGA_BLANK, VGA_SYNC, VGA_CLK);
-				 
-	// variables to be used
-	reg valid;
+
 	reg [2:0]A1_color;
 	
 	// grid color parameters
@@ -43,6 +42,7 @@ module missile_control(
 	reg [7:0]NS;
 	
 	// state parameters
+	//-----------------------------------------------------------------
 	parameter 
 		INIT = 8'd70,
 		
@@ -74,24 +74,126 @@ module missile_control(
 		LAUNCHER_END = 8'd20,
 		
 		// City graphics
-		CITY_START = 8'd21,
-		CITY_CHECK_Y = 8'd22,
-		CITY_CHECK_X = 8'd23,
-		CITY_UPDATE_Y = 8'd24,
-		CITY_UPDATE_X = 8'd25,
-		CITY_DRAW = 8'd26,
-		CITY_END = 8'd27,
+		CITY1_START = 8'd21,
+		CITY1_CHECK_Y = 8'd22,
+		CITY1_CHECK_X = 8'd23,
+		CITY1_UPDATE_Y = 8'd24,
+		CITY1_UPDATE_X = 8'd25,
+		CITY1_DRAW = 8'd26,
+		CITY1_END = 8'd27,
+		
+		CITY2_START = 8'd28,
+		CITY2_CHECK_Y = 8'd29,
+		CITY2_CHECK_X = 8'd30,
+		CITY2_UPDATE_Y = 8'd31,
+		CITY2_UPDATE_X = 8'd32,
+		CITY2_DRAW = 8'd33,
+		CITY2_END = 8'd34,
+		
+		// Enemy Missiles
+		EM1_START = 8'd35,
+		EM1_CHECK_Y = 8'd36,
+		EM1_CHECK_X = 8'd37,
+		EM1_UPDATE_Y = 8'd38,
+		EM1_UPDATE_X = 8'd39,
+		EM1_DRAW = 8'd40,
+		EM1_END = 8'd41,
 
 		DONE = 8'd71,
 		
 		ERROR = 8'hF;
 		
-		
+	// City variables
+	// -------------------------------------------------------------------
+	wire [31:0] city1_x_init = 32'd80;
+	wire [31:0] city1_y_init = 32'd210;
 	reg [31:0] city1_x = 32'd80;
 	reg [31:0] city1_y = 32'd210;
-	city city1(clk, rst, city1_x, city1_y, city_color, status_city1, out_x, out_y, out_color, city1_done);
-			
-			
+	reg city1_status = 1'b1;
+	
+	wire [31:0] city2_x_init = 32'd240;
+	wire [31:0] city2_y_init = 32'd210;
+	reg [31:0] city2_x = 32'd240;
+	reg [31:0] city2_y = 32'd210;
+	reg city2_status = 1'b1;
+	
+	// Enemy missile variables
+	// -------------------------------------------------------------------
+	wire em1_x_init = 32'd64;
+	wire em1_y_init = 32'd0;
+	wire em1_x_final = 32'd80;
+	wire em1_y_final = 32'd208;
+	wire em1_dx = 32'd1;
+	wire em1_dy = 32'd13;
+	reg em1_currX = 32'd64;
+	reg em1_currY = 32'd0;
+	reg em1_active = 0;
+	
+	wire em2_x_init = 32'd128;
+	wire em2_y_init = 32'd0;
+	wire em2_x_final = 32'd80;
+	wire em2_y_final = 32'd206;
+	
+	wire em3_x_init = 32'd192;
+	wire em3_y_init = 32'd0;
+	wire em3_x_final = 32'd80;
+	wire em3_y_final = 32'd206;
+	
+	wire em4_x_init = 32'd256;
+	wire em4_y_init = 32'd0;
+	wire em4_x_final = 32'd80;
+	wire em4_y_final = 32'd206;
+	
+	wire em5_x_init = 32'd64;
+	wire em5_y_init = 32'd0;
+	wire em5_x_final = 32'd160;
+	wire em5_y_final = 32'd206;
+	
+	wire em6_x_init = 32'd128;
+	wire em6_y_init = 32'd0;
+	wire em6_x_final = 32'd160;
+	wire em6_y_final = 32'd206;
+	
+	wire em7_x_init = 32'd192;
+	wire em7_y_init = 32'd0;
+	wire em7_x_final = 32'd160;
+	wire em7_y_final = 32'd206;
+	
+	wire em8_x_init = 32'd256;
+	wire em8_y_init = 32'd0;
+	wire em8_x_final = 32'd160;
+	wire em8_y_final = 32'd206;
+	
+	wire em9_x_init = 32'd64;
+	wire em9_y_init = 32'd0;
+	wire em9_x_final = 32'd240;
+	wire em9_y_final = 32'd206;
+	
+	wire em10_x_init = 32'd128;
+	wire em10_y_init = 32'd0;
+	wire em10_x_final = 32'd240;
+	wire em10_y_final = 32'd206;
+	
+	wire em11_x_init = 32'd192;
+	wire em11_y_init = 32'd0;
+	wire em11_x_final = 32'd240;
+	wire em11_y_final = 32'd206;
+	
+	wire em12_x_init = 32'd256;
+	wire em12_y_init = 32'd0;
+	wire em12_x_final = 32'd240;
+	wire em12_y_final = 32'd206;
+	
+	
+	
+	// Game Variables 
+	// -------------------------------------------------------------------
+	reg [1:0] game_over = 2'b0;
+	
+	
+	// Logic
+	// =======================================================================================
+	// =======================================================================================
 	always @(posedge clk or negedge rst)
 	begin
 		if (rst == 1'b0)
@@ -202,19 +304,103 @@ module missile_control(
 			LAUNCHER_UPDATE_Y: NS = LAUNCHER_CHECK_Y;
 			LAUNCHER_UPDATE_X: NS = LAUNCHER_CHECK_X;
 			LAUNCHER_DRAW: NS = LAUNCHER_UPDATE_X;
-			LAUNCHER_END: NS = CITY_START;
+			LAUNCHER_END: NS = CITY1_START;
 			
-			// City graphics
+			// City 1 graphics
 			// ---------------------------------------------------------------------
-			CITY_START: NS = CITY_DRAW;
-			CITY_DRAW:
+			CITY1_START: NS = CITY1_CHECK_Y;
+			CITY1_CHECK_Y: 
 			begin
-				if (city1_done != 1'b1)
-					NS = CITY_DRAW;
-				else 
-					NS = CITY_END;
+				if (city1_y < city1_y_init)
+				begin
+					NS = CITY1_CHECK_X;
+				end
+				else
+				begin
+					NS = CITY1_END;
+				end
 			end
-			CITY_END: NS = DONE;
+			CITY1_CHECK_X:
+			begin
+				if (city1_x < (city1_x_init+32'd5))
+				begin
+					NS = CITY1_DRAW;
+				end
+				else
+				begin
+					NS = CITY1_UPDATE_Y;
+				end
+			end
+			CITY1_UPDATE_Y: NS = CITY1_CHECK_Y;
+			CITY1_UPDATE_X: NS = CITY1_CHECK_X;
+			CITY1_DRAW: NS = CITY1_UPDATE_X;
+			CITY1_END: NS = CITY2_START;
+			
+			// City 2 graphics
+			// ---------------------------------------------------------------------
+			CITY2_START: NS = CITY2_CHECK_Y;
+			CITY2_CHECK_Y: 
+			begin
+				if (city2_y < city2_y_init)
+				begin
+					NS = CITY2_CHECK_X;
+				end
+				else
+				begin
+					NS = CITY2_END;
+				end
+			end
+			CITY2_CHECK_X:
+			begin
+				if (city2_x < (city2_x_init+32'd5))
+				begin
+					NS = CITY2_DRAW;
+				end
+				else
+				begin
+					NS = CITY2_UPDATE_Y;
+				end
+			end
+			CITY2_UPDATE_Y: NS = CITY2_CHECK_Y;
+			CITY2_UPDATE_X: NS = CITY2_CHECK_X;
+			CITY2_DRAW: NS = CITY2_UPDATE_X;
+			CITY2_END: NS = EM1_START;
+			
+			// Enemy Missile graphics
+			// ---------------------------------------------------------------------
+			EM1_START: 
+			begin
+				if (em1_active == 1)
+					NS = EM1_CHECK_Y;
+				else
+					NS = DONE;
+			end
+			EM1_CHECK_Y: 
+			begin
+				if (em1_currY < em1_y_final)
+				begin
+					NS = EM1_CHECK_X;
+				end
+				else
+				begin
+					NS = EM1_END;
+				end
+			end
+			EM1_CHECK_X:
+			begin
+				if (em1_currX < em1_x_final)
+				begin
+					NS = EM1_DRAW;
+				end
+				else
+				begin
+					NS = EM1_UPDATE_Y;
+				end
+			end
+			EM1_UPDATE_Y: NS = EM1_CHECK_Y;
+			EM1_UPDATE_X: NS = EM1_CHECK_X;
+			EM1_DRAW: NS = EM1_UPDATE_X;
+			EM1_END: NS = DONE;
 	
 			
 			default: NS = ERROR;
@@ -225,8 +411,6 @@ module missile_control(
 	begin
 		if (rst == 1'b0)
 		begin
-			// initializing variables
-			valid <= 1'b0;
 		
 			// default colors for board
 			A1_color <= default_color;
@@ -244,8 +428,6 @@ module missile_control(
 			case(S)
 				INIT:
 				begin
-					// initializing variables
-					valid <= 1'b0;
 				
 					// default colors for board
 					A1_color <= default_color;
@@ -328,15 +510,78 @@ module missile_control(
 					y <= count_y;
 				end
 				
-				// City graphics
+				// City 1 graphics
 				// ---------------------------------------------------------------------
-				CITY_DRAW:
+				
+				CITY1_START:
 				begin
-					color <= out_color;
-					x <= out_x;
-					y <= out_y;
+					city1_x <= (city1_x_init - 32'd2);
+					city1_y <= (city1_y_init - 32'd7);
+				end
+				CITY1_UPDATE_Y:
+				begin
+					city1_y <= city1_y + 32'd1;
+					if (city1_y < city1_y_init - 32'd5)
+						city1_x = city1_x_init - 32'd2;
+					else 
+						city1_x <= city1_x_init - 32'd5;
+				end
+				CITY1_UPDATE_X:
+					city1_x <= city1_x + 32'd1;
+				CITY1_DRAW:
+				begin
+					color <= city_color;
+					x <= city1_x;
+					y <= city1_y;
+				end
+			
+				// City 2 graphics
+				// ---------------------------------------------------------------------
+				
+				CITY1_START:
+				begin
+					city2_x <= (city2_x_init - 32'd2);
+					city2_y <= (city2_y_init - 32'd7);
+				end
+				CITY1_UPDATE_Y:
+				begin
+					city2_y <= city2_y + 32'd1;
+					if (city2_y < city2_y_init - 32'd5)
+						city2_x = city2_x_init - 32'd2;
+					else 
+						city2_x <= city2_x_init - 32'd5;
+				end
+				CITY1_UPDATE_X:
+					city2_x <= city2_x + 32'd1;
+				CITY1_DRAW:
+				begin
+					color <= city_color;
+					x <= city2_x;
+					y <= city2_y;
 				end
 				
+				// Enemy missle 1 graphics
+				// ---------------------------------------------------------------------
+				EM1_START:
+				begin
+					em1_currX <= em1_x_init;
+					em1_currY <= em1_y_init;
+				end
+				EM1_UPDATE_Y:
+				begin
+					em1_currY <= em1_currY + em1_dy;
+					em1_currX <= em1_currX;
+				end
+				EM1_UPDATE_X:
+				begin
+					em1_currX <= em1_currX + em1_dx;
+				end
+				EM1_DRAW:
+				begin
+					color <= missile_color;
+					x <= em1_currX;
+					y <= em1_currY;
+				end
 				
 				ERROR:
 				begin
@@ -345,6 +590,16 @@ module missile_control(
 				begin
 				end
 			endcase
+		end
+	end
+	
+	
+	always@(*)
+	begin
+		if (game_over == 2'd2)
+		begin
+			// eventually, this will stop the game
+			game_over = 2'd2;
 		end
 	end
 				
