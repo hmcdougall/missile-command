@@ -44,7 +44,7 @@ module missile_control(
 	// state parameters
 	//-----------------------------------------------------------------
 	parameter 
-		INIT = 8'd111,
+		INIT = 8'd255,
 		
 		// background
 		BACK_START = 8'd0,
@@ -176,8 +176,25 @@ module missile_control(
 		EM12_UPDATE_X = 8'd105,
 		EM12_DRAW = 8'd106,
 		EM12_END = 8'd107,
+		
+		GAME_RUNNER = 8'd108,
+		MOVE_EM1 = 8'd109,
+		MOVE_EM2 = 8'd110,
+		MOVE_EM3 = 8'd111,
+		MOVE_EM4 = 8'd112,
+		MOVE_EM5 = 8'd113,
+		MOVE_EM6 = 8'd114,
+		MOVE_EM7 = 8'd115,
+		MOVE_EM8 = 8'd116,
+		MOVE_EM9 = 8'd117,
+		MOVE_EM10 = 8'd118,
+		MOVE_EM11 = 8'd119,
+		MOVE_EM12 = 8'd120,
+		CHECK_MISSILES = 8'd121,
+		GAME_WAIT = 8'd122,
+		GAME_WAITING = 8'd123,
 
-		DONE = 8'd110,
+		DONE = 8'd254,
 		
 		ERROR = 8'hF;
 		
@@ -216,7 +233,6 @@ module missile_control(
 	reg [31:0] em2_currX = 32'd128;
 	reg [31:0] em2_currY = 32'd0;
 	reg em2_active = 1'b1;
-	reg [31:0] em2_i = 32'd0;
 	
 	wire [31:0] em3_x_init = 32'd184;
 	wire [31:0] em3_y_init = 32'd0;
@@ -323,6 +339,7 @@ module missile_control(
 	// Game Variables 
 	// -------------------------------------------------------------------
 	reg [1:0] game_over = 2'b0;
+	reg [31:0] game_i = 32'd0;
 	
 	
 	// Logic
@@ -498,16 +515,14 @@ module missile_control(
 			CITY2_UPDATE_Y: NS = CITY2_CHECK_Y;
 			CITY2_UPDATE_X: NS = CITY2_CHECK_X;
 			CITY2_DRAW: NS = CITY2_UPDATE_X;
-			CITY2_END: NS = EM1_START;
+			CITY2_END: NS = EM2_START;
+
 			
 			// Enemy Missile 1 graphics
 			// ---------------------------------------------------------------------
 			EM1_START: 
 			begin
-				if (em1_active == 1'b1)
-					NS = EM1_CHECK_Y;
-				else
-					NS = EM2_START;
+				NS = EM2_START;
 			end
 			EM1_CHECK_Y: 
 			begin
@@ -517,22 +532,19 @@ module missile_control(
 				end
 				else
 				begin
-					NS = EM1_END;
+					NS = MOVE_EM2;
 				end
 			end
 			EM1_UPDATE_Y: NS = EM1_CHECK_Y;
 			EM1_UPDATE_X: NS = EM1_UPDATE_Y;
-			EM1_DRAW: NS = EM1_UPDATE_X;
-			EM1_END: NS = EM2_START;
+			EM1_DRAW: NS = MOVE_EM2;
+			EM1_END: NS = MOVE_EM2;
 			
 			// Enemy Missile 2 graphics
 			// ---------------------------------------------------------------------
 			EM2_START: 
 			begin
-				if (em2_active == 1'b1)
-					NS = EM2_CHECK_Y;
-				else
-					NS = EM3_START;
+				NS = CHECK_MISSILES;
 			end
 			EM2_CHECK_Y: 
 			begin
@@ -542,31 +554,14 @@ module missile_control(
 				end
 				else
 				begin
-					NS = EM2_END;
+					NS = CHECK_MISSILES;
 				end
 			end
 			EM2_UPDATE_Y: NS = EM2_CHECK_Y;
 			EM2_UPDATE_X: NS = EM2_UPDATE_Y;
-			EM2_WAIT:
-			begin
-				if (em2_i < 32'd12500000)
-					NS = EM2_WAITING;
-				else
-					NS = EM2_UPDATE_X;
-			end
-			EM2_WAITING: NS = EM2_WAIT;
-			EM2_DRAW: NS = EM2_WAIT;
-			EM2_END: 
-			begin
-//				if (em2_currY < 32'd206 & city1_status == 1'b1)
-//					begin
-//						city1_status <= 1'b0;
-//						game_over <= game_over + 1'b1;
-//						NS = CITY1_START;
-//					end
-//				else
-					NS = EM3_START;
-			end
+			EM2_DRAW: NS = CHECK_MISSILES;
+			EM2_END: NS = CHECK_MISSILES;
+			
 			
 			// Enemy Missile 3 graphics
 			// ---------------------------------------------------------------------
@@ -818,6 +813,34 @@ module missile_control(
 			EM12_DRAW: NS = EM12_UPDATE_X;
 			EM12_END: NS = DONE;
 			
+			
+			// GAME RUNNER
+			// ---------------------------------------------------------------------
+			GAME_RUNNER: NS = MOVE_EM1;
+			MOVE_EM1:
+			begin
+				if (em1_active == 1'b1)
+					NS = EM1_UPDATE_X;
+				else
+					NS = MOVE_EM2;
+			end
+			MOVE_EM2:
+			begin
+				if (em2_active == 1'b1)
+					NS = EM2_UPDATE_X;
+				else
+					NS = CHECK_MISSILES;
+			end
+			CHECK_MISSILES: NS = GAME_WAIT;
+			GAME_WAIT:
+			begin
+				if (game_i < 32'd12500000)
+					NS = GAME_WAITING;
+				else
+					NS = MOVE_EM1;
+			end
+			GAME_WAITING: NS = GAME_WAIT;
+			
 			default: NS = ERROR;
 		endcase
 	end
@@ -1011,10 +1034,6 @@ module missile_control(
 				begin
 					em2_currX <= em2_x_init;
 					em2_currY <= em2_y_init;
-					
-					color <= missile_color;
-					x <= em2_currX;
-					y <= em2_currY;
 				end
 				EM2_UPDATE_Y:
 				begin
@@ -1024,14 +1043,11 @@ module missile_control(
 				begin
 					em2_currX <= em2_currX - em2_dx;
 				end
-				EM2_WAITING:
-					em2_i = em2_i + 1;
 				EM2_DRAW:
 				begin
 					color <= missile_color;
 					x <= em2_currX;
 					y <= em2_currY;
-					em2_i = 32'd0;
 				end
 				
 				// Enemy missle 3 graphics
@@ -1296,6 +1312,22 @@ module missile_control(
 					x <= em12_currX;
 					y <= em12_currY;
 				end
+				
+			// GAME RUNNER
+			// ---------------------------------------------------------------------
+			GAME_RUNNER: 
+			begin
+				game_i <= 32'd0;
+			end
+			CHECK_MISSILES:
+			begin
+				game_i <= 32'd0;
+			end
+			GAME_WAITING:
+			begin
+				game_i <= game_i + 32'd1;
+			end
+			
 				
 				ERROR:
 				begin
