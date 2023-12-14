@@ -222,7 +222,9 @@ module missile_control(
 	// PS2 Keyboard Instantiation 
 //	ps2Keyboard keyboard_mod(clk,ps2ck,ps2dt,enter,space,arrows,wasd);
 
-	
+			//debug
+			//reg [30:0]testcounter;
+			//testcounter = 1:
 	
 	// City variables
 	// -------------------------------------------------------------------
@@ -251,7 +253,7 @@ module missile_control(
 	wire [31:0] em1_dy = 32'd8;
 	reg [31:0] em1_currX = 32'd64;
 	reg [31:0] em1_currY = 32'd0;
-	reg em1_active;
+	reg em1_active = 1;
 	
 	wire [31:0] em2_x_init = 32'd128;
 	wire [31:0] em2_y_init = 32'd0;
@@ -261,7 +263,7 @@ module missile_control(
 	wire [31:0] em2_dy = 32'd8;
 	reg [31:0] em2_currX = 32'd128;
 	reg [31:0] em2_currY = 32'd0;
-	reg em2_active;
+	reg em2_active = 0;
 	
 	wire [31:0] em3_x_init = 32'd184;
 	wire [31:0] em3_y_init = 32'd0;
@@ -271,7 +273,7 @@ module missile_control(
 	wire [31:0] em3_dy = 32'd8;
 	reg [31:0] em3_currX = 32'd184;
 	reg [31:0] em3_currY = 32'd0;
-	reg em3_active;
+	reg em3_active  = 0;
 	
 	wire [31:0] em4_x_init = 32'd262;
 	wire [31:0] em4_y_init = 32'd0;
@@ -281,7 +283,7 @@ module missile_control(
 	wire [31:0] em4_dy = 32'd8;
 	reg [31:0] em4_currX = 32'd262;
 	reg [31:0] em4_currY = 32'd0;
-	reg em4_active;
+	reg em4_active = 1;
 	
 	wire [31:0] em5_x_init = 32'd56;
 	wire [31:0] em5_y_init = 32'd0;
@@ -291,7 +293,7 @@ module missile_control(
 	wire [31:0] em5_dy = 32'd8;
 	reg [31:0] em5_currX = 32'd56;
 	reg [31:0] em5_currY = 32'd0;
-	reg em5_active;
+	reg em5_active = 0;
 	
 	wire [31:0] em6_x_init = 32'd134;
 	wire [31:0] em6_y_init = 32'd0;
@@ -301,7 +303,7 @@ module missile_control(
 	wire [31:0] em6_dy = 32'd8;
 	reg [31:0] em6_currX = 32'd134;
 	reg [31:0] em6_currY = 32'd0;
-	reg em6_active;
+	reg em6_active = 0;
 	
 	wire [31:0] em7_x_init = 32'd186;
 	wire [31:0] em7_y_init = 32'd0;
@@ -311,7 +313,7 @@ module missile_control(
 	wire [31:0] em7_dy = 32'd8;
 	reg [31:0] em7_currX = 32'd186;
 	reg [31:0] em7_currY = 32'd0;
-	reg em7_active;
+	reg em7_active = 0;
 
 	
 	wire [31:0] em8_x_init = 32'd264;
@@ -322,7 +324,7 @@ module missile_control(
 	wire [31:0] em8_dy = 32'd8;
 	reg [31:0] em8_currX = 32'd264;
 	reg [31:0] em8_currY = 32'd0;
-	reg em8_active;
+	reg em8_active = 0;
 	
 	wire [31:0] em9_x_init = 32'd58;
 	wire [31:0] em9_y_init = 32'd0;
@@ -332,7 +334,7 @@ module missile_control(
 	wire [31:0] em9_dy = 32'd8;
 	reg [31:0] em9_currX = 32'd58;
 	reg [31:0] em9_currY = 32'd0;
-	reg em9_active;
+	reg em9_active = 0;
 	
 	wire [31:0] em10_x_init = 32'd136;
 	wire [31:0] em10_y_init = 32'd0;
@@ -342,7 +344,7 @@ module missile_control(
 	wire [31:0] em10_dy = 32'd8;
 	reg [31:0] em10_currX = 32'd136;
 	reg [31:0] em10_currY = 32'd0;
-	reg em10_active;
+	reg em10_active = 0;
 	
 	wire [31:0] em11_x_init = 32'd188;
 	wire [31:0] em11_y_init = 32'd0;
@@ -352,7 +354,7 @@ module missile_control(
 	wire [31:0] em11_dy = 32'd8;
 	reg [31:0] em11_currX = 32'd188;
 	reg [31:0] em11_currY = 32'd0;
-	reg em11_active;
+	reg em11_active = 0;
 
 	
 	wire [31:0] em12_x_init = 32'd266;
@@ -363,63 +365,63 @@ module missile_control(
 	wire [31:0] em12_dy = 32'd8;
 	reg [31:0] em12_currX = 32'd266;
 	reg [31:0] em12_currY = 32'd0;
-	reg em12_active;
+	reg em12_active = 0;
 	
-	//missile spawning randomizer
-	//--------------------------------------------------------------------
-
-	
-	wire missile_1_hot; 
-	wire missile_2_hot; 
-	wire missile_3_hot; 
-	wire missile_4_hot;
-	
-	
-	
-	enemy_missile_shift_reg_1 missile_1_fire(clk,missile_1_hot);
-	enemy_missile_shift_reg_2 missile_2_fire(clk,missile_2_hot);
-	enemy_missile_shift_reg_3 missile_3_fire(clk,missile_3_hot);
-	enemy_missile_shift_reg_4 missile_4_fire(clk,missile_4_hot);
-	
-	reg missile_1_hot_reg;
-	reg missile_2_hot_reg;
-	reg missile_3_hot_reg;
-	reg missile_4_hot_reg;
-	
-
-	
-	//missile targeting point randomizer
-	//----------------------------------------------------------------------------
-	
-	wire [2:0]missile_1_target;
-	wire [2:0]missile_2_target;
-	wire [2:0]missile_3_target;
-	wire [2:0]missile_4_target;
-	
-	enemy_missile_targeting_reg_1 missile_1_target_sel(clk,missile_1_target);
-	enemy_missile_targeting_reg_2 missile_2_target_sel(clk,missile_2_target);
-	enemy_missile_targeting_reg_3 missile_3_target_sel(clk,missile_3_target);
-	enemy_missile_targeting_reg_4 missile_4_target_sel(clk,missile_4_target);
-	
-
-	
-	reg [2:0]missile_1_target_reg;
-	reg [2:0]missile_2_target_reg;
-	reg [2:0]missile_3_target_reg;
-	reg [2:0]missile_4_target_reg;
-	
-	always @(*)
-	begin
-		missile_1_hot_reg = missile_1_hot;
-		missile_2_hot_reg = missile_2_hot;
-		missile_3_hot_reg = missile_3_hot;
-		missile_4_hot_reg = missile_4_hot;
-						
-		missile_1_target_reg = missile_1_target;
-		missile_2_target_reg = missile_2_target;
-		missile_3_target_reg = missile_3_target;
-		missile_4_target_reg = missile_4_target;
-	end
+//	//missile spawning randomizer
+//	//--------------------------------------------------------------------
+//
+//	
+//	wire missile_1_hot; 
+//	wire missile_2_hot; 
+//	wire missile_3_hot; 
+//	wire missile_4_hot;
+//	
+//	
+//	
+//	enemy_missile_shift_reg_1 missile_1_fire(clk,missile_1_hot);
+//	enemy_missile_shift_reg_2 missile_2_fire(clk,missile_2_hot);
+//	enemy_missile_shift_reg_3 missile_3_fire(clk,missile_3_hot);
+//	enemy_missile_shift_reg_4 missile_4_fire(clk,missile_4_hot);
+//	
+//	reg missile_1_hot_reg;
+//	reg missile_2_hot_reg;
+//	reg missile_3_hot_reg;
+//	reg missile_4_hot_reg;
+//	
+//
+//	
+//	//missile targeting point randomizer
+//	//----------------------------------------------------------------------------
+//	
+//	wire [2:0]missile_1_target;
+//	wire [2:0]missile_2_target;
+//	wire [2:0]missile_3_target;
+//	wire [2:0]missile_4_target;
+//	
+//	enemy_missile_targeting_reg_1 missile_1_target_sel(clk,missile_1_target);
+//	enemy_missile_targeting_reg_2 missile_2_target_sel(clk,missile_2_target);
+//	enemy_missile_targeting_reg_3 missile_3_target_sel(clk,missile_3_target);
+//	enemy_missile_targeting_reg_4 missile_4_target_sel(clk,missile_4_target);
+//	
+//
+//	
+//	reg [2:0]missile_1_target_reg;
+//	reg [2:0]missile_2_target_reg;
+//	reg [2:0]missile_3_target_reg;
+//	reg [2:0]missile_4_target_reg;
+//	
+//	always @(*)
+//	begin
+//		missile_1_hot_reg = missile_1_hot;
+//		missile_2_hot_reg = missile_2_hot;
+//		missile_3_hot_reg = missile_3_hot;
+//		missile_4_hot_reg = missile_4_hot;
+//						
+//		missile_1_target_reg = missile_1_target;
+//		missile_2_target_reg = missile_2_target;
+//		missile_3_target_reg = missile_3_target;
+//		missile_4_target_reg = missile_4_target;
+//	end
 	
 	// Game Variables 
 	// -------------------------------------------------------------------
@@ -998,19 +1000,18 @@ module missile_control(
 			
 			CHECK_MISSILES: NS = MISSILE_SPAWN;
 			
-			CHECK_GAME_OVER: 
-			begin
-				if ((city1_status == 1'b0 & city2_status == 1'b0) | missile_launcher_status == 1'b0)
-//				if (em1_active == 1'b0)
-					NS = GAME_OVER_START;
-				else 
-					NS = CHECK_MISSILES;
-			end
+//			CHECK_GAME_OVER: 
+//			begin
+//				if ((city1_status == 1'b0 & city2_status == 1'b0) | missile_launcher_status == 1'b0)
+////				if (em1_active == 1'b0)
+//					NS = GAME_OVER_START;
+//				else 
+//					NS = CHECK_MISSILES;
+//			end
 			
-			CHECK_MISSILES: NS = MISSILE_SPAWN;
+		
 			
 			MISSILE_SPAWN: NS = GAME_WAIT;
-			
 			GAME_WAIT:
 			begin
 				if (game_i < 32'd12500000)
@@ -1609,149 +1610,150 @@ module missile_control(
 					end
 				end
 				MISSILE_SPAWN:
-				begin
+			begin
 				
 					//Missile Spawning
 					//====================================================================
-	
-					if(missile_1_target_reg == 2)
-					begin
-					em1_active <= 1'b1;
-							color <= missile_color;
-					x <= 60;
-					y <= 60;
-						end
-					if(missile_1_target_reg == 1)
-					begin
-					em1_active <= 1'b1;
-							color <= missile_color;
-					x <= 70;
-					y <= 10;
-						end
-					if(missile_1_target_reg == 0)
-					begin
-					em1_active <= 1'b1;
-							color <= missile_color;
-					x <= 20;
-					y <= 20;
-						end
-					//missile spawn 1
-					if(( missile_1_hot_reg == 1) & (missile_1_target_reg == 0))
-						begin
-							em1_active <= 1'b1;
-							color <= missile_color;
-					x <= 30;
-					y <= 30;
-						end
-					else
-						begin
-							em1_active <= 1'b0;
-						end
-						
-					if(( missile_1_hot_reg == 1) & (missile_1_target_reg == 1))
-						begin
-							em5_active <= 1'b1;
-						end
-					else
-						begin
-							em5_active <= 1'b0;
-						end
-						
-					if(( missile_1_hot_reg == 1) & (missile_1_target_reg == 2))
-						begin
-							em9_active <= 1'b1;
-						end
-					else
-						begin
-							em9_active <= 1'b0;
-						end
-						
-					//missile spawn 2
-					if(( missile_2_hot_reg == 1) & (missile_2_target_reg == 0))
-						begin
-							em2_active <= 1'b1;
-						end
-					else
-						begin
-							em2_active <= 1'b0;
-						end
-						
-					if(( missile_2_hot_reg == 1) & (missile_2_target_reg == 1))
-						begin
-							em6_active <= 1'b1;
-						end
-					else
-						begin
-							em6_active <= 1'b0;
-						end
-						
-					if(( missile_2_hot_reg == 1) & (missile_2_target_reg == 2))
-						begin
-							em10_active <= 1'b1;
-						end
-					else
-						begin
-							em10_active <= 1'b0;
-						end
 					
-					//missile spawn 3
-					if(( missile_3_hot_reg == 1) & (missile_3_target_reg == 0))
-						begin
-							em3_active <= 1'b1;
-						end
-					else
-						begin
-							em3_active <= 1'b0;
-						end
-						
-					if(( missile_3_hot_reg == 1) & (missile_3_target_reg == 1))
-						begin
-							em7_active <= 1'b1;
-						end
-					else
-						begin
-							em7_active <= 1'b0;
-						end
-						
-					if(( missile_3_hot_reg == 1) & (missile_3_target_reg == 2))
-						begin
-							em11_active <= 1'b1;
-						end
-					else
-						begin
-							em11_active <= 1'b0;
-						end
-						
-					//missile spawn4
-					
-					if(( missile_4_hot_reg == 1) & (missile_4_target_reg == 0))
-						begin
-							em4_active <= 1'b1;
-						end
-					else
-						begin
-							em4_active <= 1'b0;
-						end
-						
-					if(( missile_4_hot_reg == 1) & (missile_4_target_reg == 1))
-						begin
-							em8_active <= 1'b1;
-						end
-					else
-						begin
-							em8_active <= 1'b0;
-						end
-						
-					if(( missile_4_hot_reg == 1) & (missile_4_target_reg == 2))
-						begin
-							em12_active <= 1'b1;
-						end
-					else
-						begin
-							em12_active <= 1'b0;
-						end
-						
-				end
+					//testcounter = 1;
+//					if(missile_1_target_reg == 2)
+//					begin
+//					em1_active <= 1'b1;
+//							color <= missile_color;
+//					x <= 60;
+//					y <= 60;
+//						end
+//					if(missile_1_target_reg == 1)
+//					begin
+//					em1_active <= 1'b1;
+//							color <= missile_color;
+//					x <= 70;
+//					y <= 10;
+//						end
+//					if(missile_1_target_reg == 0)
+//					begin
+//					em1_active <= 1'b1;
+//							color <= missile_color;
+//					x <= 20;
+//					y <= 20;
+//						end
+//					//missile spawn 1
+//					if(( missile_1_hot_reg == 1) & (missile_1_target_reg == 0))
+//						begin
+//							em1_active <= 1'b1;
+//							color <= missile_color;
+//					x <= 30;
+//					y <= 30;
+//						end
+//					else
+//						begin
+//							em1_active <= 1'b0;
+//						end
+//						
+//					if(( missile_1_hot_reg == 1) & (missile_1_target_reg == 1))
+//						begin
+//							em5_active <= 1'b1;
+//						end
+//					else
+//						begin
+//							em5_active <= 1'b0;
+//						end
+//						
+//					if(( missile_1_hot_reg == 1) & (missile_1_target_reg == 2))
+//						begin
+//							em9_active <= 1'b1;
+//						end
+//					else
+//						begin
+//							em9_active <= 1'b0;
+//						end
+//						
+//					//missile spawn 2
+//					if(( missile_2_hot_reg == 1) & (missile_2_target_reg == 0))
+//						begin
+//							em2_active <= 1'b1;
+//						end
+//					else
+//						begin
+//							em2_active <= 1'b0;
+//						end
+//						
+//					if(( missile_2_hot_reg == 1) & (missile_2_target_reg == 1))
+//						begin
+//							em6_active <= 1'b1;
+//						end
+//					else
+//						begin
+//							em6_active <= 1'b0;
+//						end
+//						
+//					if(( missile_2_hot_reg == 1) & (missile_2_target_reg == 2))
+//						begin
+//							em10_active <= 1'b1;
+//						end
+//					else
+//						begin
+//							em10_active <= 1'b0;
+//						end
+//					
+//					//missile spawn 3
+//					if(( missile_3_hot_reg == 1) & (missile_3_target_reg == 0))
+//						begin
+//							em3_active <= 1'b1;
+//						end
+//					else
+//						begin
+//							em3_active <= 1'b0;
+//						end
+//						
+//					if(( missile_3_hot_reg == 1) & (missile_3_target_reg == 1))
+//						begin
+//							em7_active <= 1'b1;
+//						end
+//					else
+//						begin
+//							em7_active <= 1'b0;
+//						end
+//						
+//					if(( missile_3_hot_reg == 1) & (missile_3_target_reg == 2))
+//						begin
+//							em11_active <= 1'b1;
+//						end
+//					else
+//						begin
+//							em11_active <= 1'b0;
+//						end
+//						
+//					//missile spawn4
+//					
+//					if(( missile_4_hot_reg == 1) & (missile_4_target_reg == 0))
+//						begin
+//							em4_active <= 1'b1;
+//						end
+//					else
+//						begin
+//							em4_active <= 1'b0;
+//						end
+//						
+//					if(( missile_4_hot_reg == 1) & (missile_4_target_reg == 1))
+//						begin
+//							em8_active <= 1'b1;
+//						end
+//					else
+//						begin
+//							em8_active <= 1'b0;
+//						end
+//						
+//					if(( missile_4_hot_reg == 1) & (missile_4_target_reg == 2))
+//						begin
+//							em12_active <= 1'b1;
+//						end
+//					else
+//						begin
+//							em12_active <= 1'b0;
+//						end
+//						
+			end
 				
 			// GAME RUNNER
 			// ---------------------------------------------------------------------
