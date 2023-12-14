@@ -213,7 +213,7 @@ module missile_control(
 		
 		ERROR = 8'hF;
 	// PS2 Keyboard Instantiation 
-	ps2Keyboard keyboard_mod(clk,ps2ck,ps2dt,enter,space,arrows,wasd);
+	//ps2Keyboard keyboard_mod(clk,ps2ck,ps2dt,enter,space,arrows,wasd);
 
 	
 	
@@ -231,6 +231,170 @@ module missile_control(
 	reg [31:0] city2_y = 32'd210;
 	reg city2_status = 1'b1;
 	
+	
+	
+	//Missile Spawning
+	//====================================================================
+
+	
+	
+	//missile spawning randomizer
+	//--------------------------------------------------------------------
+	
+	reg missile_1_hot_reg;
+	reg missile_2_hot_reg;
+	reg missile_3_hot_reg;
+	reg missile_4_hot_reg;
+	
+	enemy_missile_shift_reg_1 missile_1_fire(clk,missile_1_hot);
+	enemy_missile_shift_reg_2 missile_2_fire(clk,missile_2_hot);
+	enemy_missile_shift_reg_3 missile_3_fire(clk,missile_3_hot);
+	enemy_missile_shift_reg_4 missile_4_fire(clk,missile_4_hot);
+	
+	wire missile_1_hot = missile_1_hot_reg;
+	wire missile_2_hot = missile_2_hot_reg;
+	wire missile_3_hot = missile_3_hot_reg;
+	wire missile_4_hot = missile_4_hot_reg;
+	
+	
+	
+	//missile targeting point randomizer
+	//----------------------------------------------------------------------------
+	
+	reg [2:0]missile_1_target_reg;
+	reg [2:0]missile_2_target_reg;
+	reg [2:0]missile_3_target_reg;
+	reg [2:0]missile_4_target_reg;
+	
+	enemy_missile_targeting_reg_1 missile_1_target_sel(clk,missile_1_target);
+	enemy_missile_targeting_reg_2 missile_2_target_sel(clk,missile_2_target);
+	enemy_missile_targeting_reg_3 missile_3_target_sel(clk,missile_3_target);
+	enemy_missile_targeting_reg_4 missile_4_target_sel(clk,missile_4_target);
+	
+	wire [2:0]missile_1_target = missile_1_target_reg;
+	wire [2:0]missile_2_target = missile_1_target_reg;
+	wire [2:0]missile_3_target = missile_1_target_reg;
+	wire [2:0]missile_4_target = missile_1_target_reg;
+	
+
+	
+	
+	//Missile Logic
+	//============================================================================
+	
+	//
+	
+	always @(posedge clk)
+	begin
+	
+	//missile spawn 1
+	if(( missile_1_hot_reg == 1) & (missile_1_target_reg == 0))
+		begin
+			em1_active <= 1'b1;
+		end
+	else
+		begin
+			em1_active <= 1'b0;
+		end
+	if(( missile_1_hot_reg == 1) & (missile_1_target_reg == 1))
+		begin
+			em5_active <= 1'b1;
+		end
+	else
+		begin
+			em5_active <= 1'b0;
+		end
+	if(( missile_1_hot_reg == 1) & (missile_1_target_reg == 2))
+		begin
+			em9_active <= 1'b1;
+		end
+	else
+		begin
+			em9_active <= 1'b0;
+		end
+		
+	//missile spawn 2
+	if(( missile_2_hot_reg == 1) & (missile_2_target_reg == 0))
+		begin
+			em2_active <= 1'b1;
+		end
+	else
+		begin
+			em2_active <= 1'b0;
+		end
+	if(( missile_2_hot_reg == 1) & (missile_2_target_reg == 1))
+		begin
+			em6_active <= 1'b1;
+		end
+	else
+		begin
+			em6_active <= 1'b0;
+		end
+	if(( missile_2_hot_reg == 1) & (missile_2_target_reg == 2))
+		begin
+			em10_active <= 1'b1;
+		end
+	else
+		begin
+			em10_active <= 1'b0;
+		end
+	
+	//missile spawn 3
+	if(( missile_3_hot_reg == 1) & (missile_3_target_reg == 0))
+		begin
+			em3_active <= 1'b1;
+		end
+	else
+		begin
+			em3_active <= 1'b0;
+		end
+	if(( missile_3_hot_reg == 1) & (missile_3_target_reg == 1))
+		begin
+			em7_active <= 1'b1;
+		end
+	else
+		begin
+			em7_active <= 1'b0;
+		end
+	if(( missile_3_hot_reg == 1) & (missile_3_target_reg == 2))
+		begin
+			em11_active <= 1'b1;
+		end
+	else
+		begin
+			em11_active <= 1'b0;
+		end
+	//missile spawn4
+	
+	if(( missile_4_hot_reg == 1) & (missile_4_target_reg == 0))
+		begin
+			em4_active <= 1'b1;
+		end
+	else
+		begin
+			em4_active <= 1'b0;
+		end
+	if(( missile_4_hot_reg == 1) & (missile_4_target_reg == 1))
+		begin
+			em8_active <= 1'b1;
+		end
+	else
+		begin
+			em8_active <= 1'b0;
+		end
+	if(( missile_4_hot_reg == 1) & (missile_4_target_reg == 2))
+		begin
+			em12_active <= 1'b1;
+		end
+	else
+		begin
+			em12_active <= 1'b0;
+		end
+	
+	end
+	
+	
+
 	// Enemy missile variables
 	// -------------------------------------------------------------------
 	wire [31:0] em1_x_init = 32'd54;
@@ -241,7 +405,7 @@ module missile_control(
 	wire [31:0] em1_dy = 32'd8;
 	reg [31:0] em1_currX = 32'd64;
 	reg [31:0] em1_currY = 32'd0;
-	reg em1_active = 1'b1;
+	reg em1_active;
 	
 	wire [31:0] em2_x_init = 32'd128;
 	wire [31:0] em2_y_init = 32'd0;
