@@ -3,7 +3,7 @@ input clk,
 output reg num_out
 );
 
-
+//initial values for the registers
 reg num1 = 1;
 reg num2 = 0;
 reg num3 = 0;
@@ -21,6 +21,7 @@ reg num14 = 1;
 reg num15 = 0;
 reg num16 = 0;
 
+//registers shift valuse
 
 
 always @(posedge clk)
@@ -45,7 +46,7 @@ num14 <= num15;
 num15 <= num16;
 num16 <= num1;
 
-num_out <= num13;
+num_out <= num13;//registers that the module outputs
 
 end
 

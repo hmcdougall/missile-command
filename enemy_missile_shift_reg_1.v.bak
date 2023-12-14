@@ -1,4 +1,4 @@
-module enemy_missile_shift_reg(
+module enemy_missile_shift_reg_1(
 input clk,
 output reg num_out
 );

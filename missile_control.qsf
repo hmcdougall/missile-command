@@ -42,7 +42,7 @@ set_global_assignment -name DEVICE EP4CE115F29C7
 set_global_assignment -name TOP_LEVEL_ENTITY missile_control
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 16.1.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "20:45:22  DECEMBER 10, 2023"
-set_global_assignment -name LAST_QUARTUS_VERSION "16.1.0 Lite Edition"
+set_global_assignment -name LAST_QUARTUS_VERSION "19.1.0 Lite Edition"
 set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
 set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
 set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
@@ -72,4 +72,6 @@ set_location_assignment PIN_C10 -to VGA_SYNC
 set_location_assignment PIN_C13 -to VGA_VS
 set_location_assignment PIN_G19 -to grid_A1[0]
 set_location_assignment PIN_F19 -to grid_A1[1]
+set_global_assignment -name VERILOG_FILE ps2Keyboard.v
+set_global_assignment -name VERILOG_FILE mouse_Inner_controller.v
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

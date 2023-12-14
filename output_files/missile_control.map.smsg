@@ -1,0 +1,2 @@
+Warning (10268): Verilog HDL information at missile_control.v(871): always construct contains both blocking and non-blocking assignments File: D:/Classes/ECE287/FINAL/missile-command/missile_control.v Line: 871
+Warning (10268): Verilog HDL information at ps2Keyboard.v(27): always construct contains both blocking and non-blocking assignments File: D:/Classes/ECE287/FINAL/missile-command/ps2Keyboard.v Line: 27

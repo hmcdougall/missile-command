@@ -12,7 +12,12 @@ module missile_control(
 	output VGA_VS,
 	output VGA_BLANK,
 	output VGA_SYNC,
-	output VGA_CLK
+	output VGA_CLK,
+	
+	//ps2Keyboard
+	//--------------------------------------------------
+	inout ps2ck,
+	inout ps2dt
 	
 	);
 	
@@ -23,6 +28,16 @@ module missile_control(
 	reg [31:0]y;
 	reg [2:0]color;
 	reg back_color = 3'b000;
+	//ps2Keyboard variables
+	//----------------------------------------------------------------
+	reg [3:0]arrows;
+	reg [3:0]wasd;
+	reg space;
+	reg enter;
+	
+	
+	
+	
 	
 	// counter variables used for displaying
 	reg [31:0]count_x;
@@ -197,7 +212,11 @@ module missile_control(
 		DONE = 8'd254,
 		
 		ERROR = 8'hF;
-		
+	// PS2 Keyboard Instantiation 
+	ps2Keyboard keyboard_mod(clk,ps2ck,ps2dt,enter,space,arrows,wasd);
+
+	
+	
 	// City variables
 	// -------------------------------------------------------------------
 	wire [31:0] city1_x_init = 32'd80;
