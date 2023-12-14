@@ -213,7 +213,7 @@ module missile_control(
 		
 		ERROR = 8'hF;
 	// PS2 Keyboard Instantiation 
-	//ps2Keyboard keyboard_mod(clk,ps2ck,ps2dt,enter,space,arrows,wasd);
+//	ps2Keyboard keyboard_mod(clk,ps2ck,ps2dt,enter,space,arrows,wasd);
 
 	
 	
@@ -231,170 +231,6 @@ module missile_control(
 	reg [31:0] city2_y = 32'd210;
 	reg city2_status = 1'b1;
 	
-	
-	
-	//Missile Spawning
-	//====================================================================
-
-	
-	
-	//missile spawning randomizer
-	//--------------------------------------------------------------------
-	
-	reg missile_1_hot_reg;
-	reg missile_2_hot_reg;
-	reg missile_3_hot_reg;
-	reg missile_4_hot_reg;
-	
-	enemy_missile_shift_reg_1 missile_1_fire(clk,missile_1_hot);
-	enemy_missile_shift_reg_2 missile_2_fire(clk,missile_2_hot);
-	enemy_missile_shift_reg_3 missile_3_fire(clk,missile_3_hot);
-	enemy_missile_shift_reg_4 missile_4_fire(clk,missile_4_hot);
-	
-	wire missile_1_hot = missile_1_hot_reg;
-	wire missile_2_hot = missile_2_hot_reg;
-	wire missile_3_hot = missile_3_hot_reg;
-	wire missile_4_hot = missile_4_hot_reg;
-	
-	
-	
-	//missile targeting point randomizer
-	//----------------------------------------------------------------------------
-	
-	reg [2:0]missile_1_target_reg;
-	reg [2:0]missile_2_target_reg;
-	reg [2:0]missile_3_target_reg;
-	reg [2:0]missile_4_target_reg;
-	
-	enemy_missile_targeting_reg_1 missile_1_target_sel(clk,missile_1_target);
-	enemy_missile_targeting_reg_2 missile_2_target_sel(clk,missile_2_target);
-	enemy_missile_targeting_reg_3 missile_3_target_sel(clk,missile_3_target);
-	enemy_missile_targeting_reg_4 missile_4_target_sel(clk,missile_4_target);
-	
-	wire [2:0]missile_1_target = missile_1_target_reg;
-	wire [2:0]missile_2_target = missile_1_target_reg;
-	wire [2:0]missile_3_target = missile_1_target_reg;
-	wire [2:0]missile_4_target = missile_1_target_reg;
-	
-
-	
-	
-	//Missile Logic
-	//============================================================================
-	
-	//
-	
-	always @(posedge clk)
-	begin
-	
-	//missile spawn 1
-	if(( missile_1_hot_reg == 1) & (missile_1_target_reg == 0))
-		begin
-			em1_active <= 1'b1;
-		end
-	else
-		begin
-			em1_active <= 1'b0;
-		end
-	if(( missile_1_hot_reg == 1) & (missile_1_target_reg == 1))
-		begin
-			em5_active <= 1'b1;
-		end
-	else
-		begin
-			em5_active <= 1'b0;
-		end
-	if(( missile_1_hot_reg == 1) & (missile_1_target_reg == 2))
-		begin
-			em9_active <= 1'b1;
-		end
-	else
-		begin
-			em9_active <= 1'b0;
-		end
-		
-	//missile spawn 2
-	if(( missile_2_hot_reg == 1) & (missile_2_target_reg == 0))
-		begin
-			em2_active <= 1'b1;
-		end
-	else
-		begin
-			em2_active <= 1'b0;
-		end
-	if(( missile_2_hot_reg == 1) & (missile_2_target_reg == 1))
-		begin
-			em6_active <= 1'b1;
-		end
-	else
-		begin
-			em6_active <= 1'b0;
-		end
-	if(( missile_2_hot_reg == 1) & (missile_2_target_reg == 2))
-		begin
-			em10_active <= 1'b1;
-		end
-	else
-		begin
-			em10_active <= 1'b0;
-		end
-	
-	//missile spawn 3
-	if(( missile_3_hot_reg == 1) & (missile_3_target_reg == 0))
-		begin
-			em3_active <= 1'b1;
-		end
-	else
-		begin
-			em3_active <= 1'b0;
-		end
-	if(( missile_3_hot_reg == 1) & (missile_3_target_reg == 1))
-		begin
-			em7_active <= 1'b1;
-		end
-	else
-		begin
-			em7_active <= 1'b0;
-		end
-	if(( missile_3_hot_reg == 1) & (missile_3_target_reg == 2))
-		begin
-			em11_active <= 1'b1;
-		end
-	else
-		begin
-			em11_active <= 1'b0;
-		end
-	//missile spawn4
-	
-	if(( missile_4_hot_reg == 1) & (missile_4_target_reg == 0))
-		begin
-			em4_active <= 1'b1;
-		end
-	else
-		begin
-			em4_active <= 1'b0;
-		end
-	if(( missile_4_hot_reg == 1) & (missile_4_target_reg == 1))
-		begin
-			em8_active <= 1'b1;
-		end
-	else
-		begin
-			em8_active <= 1'b0;
-		end
-	if(( missile_4_hot_reg == 1) & (missile_4_target_reg == 2))
-		begin
-			em12_active <= 1'b1;
-		end
-	else
-		begin
-			em12_active <= 1'b0;
-		end
-	
-	end
-	
-	
-
 	// Enemy missile variables
 	// -------------------------------------------------------------------
 	wire [31:0] em1_x_init = 32'd54;
@@ -405,7 +241,7 @@ module missile_control(
 	wire [31:0] em1_dy = 32'd8;
 	reg [31:0] em1_currX = 32'd64;
 	reg [31:0] em1_currY = 32'd0;
-	reg em1_active;
+	reg em1_active = 1'b1;
 	
 	wire [31:0] em2_x_init = 32'd128;
 	wire [31:0] em2_y_init = 32'd0;
@@ -465,7 +301,7 @@ module missile_control(
 	wire [31:0] em7_dy = 32'd8;
 	reg [31:0] em7_currX = 32'd186;
 	reg [31:0] em7_currY = 32'd0;
-	reg em7_active = 1'b0;
+	reg em7_active = 1'b1;
 	
 	wire [31:0] em8_x_init = 32'd264;
 	wire [31:0] em8_y_init = 32'd0;
@@ -505,7 +341,7 @@ module missile_control(
 	wire [31:0] em11_dy = 32'd8;
 	reg [31:0] em11_currX = 32'd188;
 	reg [31:0] em11_currY = 32'd0;
-	reg em11_active = 1'b0;
+	reg em11_active = 1'b1;
 	
 	wire [31:0] em12_x_init = 32'd266;
 	wire [31:0] em12_y_init = 32'd0;
@@ -698,7 +534,7 @@ module missile_control(
 			CITY2_UPDATE_Y: NS = CITY2_CHECK_Y;
 			CITY2_UPDATE_X: NS = CITY2_CHECK_X;
 			CITY2_DRAW: NS = CITY2_UPDATE_X;
-			CITY2_END: NS = EM2_START;
+			CITY2_END: NS = EM1_START;
 
 			
 			// Enemy Missile 1 graphics
@@ -707,20 +543,16 @@ module missile_control(
 			begin
 				NS = EM2_START;
 			end
-			EM1_CHECK_Y: 
-			begin
-				if (em1_currY < em1_y_final)
-				begin
-					NS = EM1_DRAW;
-				end
-				else
-				begin
-					NS = MOVE_EM2;
-				end
-			end
+			EM1_CHECK_Y: NS = EM1_DRAW;
 			EM1_UPDATE_Y: NS = EM1_CHECK_Y;
 			EM1_UPDATE_X: NS = EM1_UPDATE_Y;
-			EM1_DRAW: NS = MOVE_EM2;
+			EM1_DRAW: 
+			begin
+				if (em1_active == 1'b0 & em1_currY < em1_y_final)
+					NS = EM1_UPDATE_X;
+				else
+					NS = MOVE_EM2;
+			end
 			EM1_END: NS = MOVE_EM2;
 			
 			// Enemy Missile 2 graphics
@@ -729,20 +561,16 @@ module missile_control(
 			begin
 				NS = EM3_START;
 			end
-			EM2_CHECK_Y: 
-			begin
-				if (em2_currY < em2_y_final)
-				begin
-					NS = EM2_DRAW;
-				end
-				else
-				begin
-					NS = MOVE_EM3;
-				end
-			end
+			EM2_CHECK_Y: NS = EM2_DRAW;
 			EM2_UPDATE_Y: NS = EM2_CHECK_Y;
 			EM2_UPDATE_X: NS = EM2_UPDATE_Y;
-			EM2_DRAW: NS = MOVE_EM3;
+			EM2_DRAW: 
+			begin
+				if (em2_active == 1'b0 & em2_currY < em2_y_final)
+					NS = EM2_UPDATE_X;
+				else
+					NS = MOVE_EM3;
+			end
 			EM2_END: NS = MOVE_EM3;
 			
 			
@@ -752,20 +580,16 @@ module missile_control(
 			begin
 				NS = EM4_START;
 			end
-			EM3_CHECK_Y: 
-			begin
-				if (em3_currY < em3_y_final)
-				begin
-					NS = EM3_DRAW;
-				end
-				else
-				begin
-					NS = MOVE_EM4;
-				end
-			end
+			EM3_CHECK_Y: NS = EM3_DRAW;
 			EM3_UPDATE_Y: NS = EM3_CHECK_Y;
 			EM3_UPDATE_X: NS = EM3_UPDATE_Y;
-			EM3_DRAW: NS = MOVE_EM4;
+			EM3_DRAW: 
+			begin
+			if (em3_active == 1'b0 & em3_currY < em3_y_final)
+					NS = EM3_UPDATE_X;
+			else
+					NS = MOVE_EM4;
+			end
 			EM3_END: NS = MOVE_EM4;
 			
 			// Enemy Missile 4 graphics
@@ -774,20 +598,16 @@ module missile_control(
 			begin
 				NS = EM5_START;
 			end
-			EM4_CHECK_Y: 
-			begin
-				if (em4_currY < em4_y_final)
-				begin
-					NS = EM4_DRAW;
-				end
-				else
-				begin
-					NS = MOVE_EM5;
-				end
-			end
+			EM4_CHECK_Y: NS = EM4_DRAW;
 			EM4_UPDATE_Y: NS = EM4_CHECK_Y;
 			EM4_UPDATE_X: NS = EM4_UPDATE_Y;
-			EM4_DRAW: NS = MOVE_EM5;
+			EM4_DRAW: 
+			begin
+			if (em4_active == 1'b0 & em4_currY < em4_y_final)
+					NS = EM4_UPDATE_X;
+			else
+					NS = MOVE_EM5;
+			end
 			EM4_END: NS = MOVE_EM5;
 			
 			// Enemy Missile 5 graphics
@@ -796,20 +616,16 @@ module missile_control(
 			begin
 				NS = EM6_START;
 			end
-			EM5_CHECK_Y: 
-			begin
-				if (em5_currY < em5_y_final)
-				begin
-					NS = EM5_DRAW;
-				end
-				else
-				begin
-					NS = MOVE_EM6;
-				end
-			end
+			EM5_CHECK_Y: NS = EM5_DRAW;
 			EM5_UPDATE_Y: NS = EM5_CHECK_Y;
 			EM5_UPDATE_X: NS = EM5_UPDATE_Y;
-			EM5_DRAW: NS = MOVE_EM6;
+			EM5_DRAW: 
+			begin
+			if (em5_active == 1'b0 & em5_currY < em5_y_final)
+					NS = EM5_UPDATE_X;
+			else
+					NS = MOVE_EM6;
+			end
 			EM5_END: NS = MOVE_EM6;
 			
 			// Enemy Missile 6 graphics
@@ -818,20 +634,16 @@ module missile_control(
 			begin
 				NS = EM7_START;
 			end
-			EM6_CHECK_Y: 
-			begin
-				if (em6_currY < em6_y_final)
-				begin
-					NS = EM6_DRAW;
-				end
-				else
-				begin
-					NS = MOVE_EM7;
-				end
-			end
+			EM6_CHECK_Y: NS = EM6_DRAW;
 			EM6_UPDATE_Y: NS = EM6_CHECK_Y;
 			EM6_UPDATE_X: NS = EM6_UPDATE_Y;
-			EM6_DRAW: NS = MOVE_EM7;
+			EM6_DRAW:
+			begin
+			if (em6_active == 1'b0 & em6_currY < em6_y_final)
+					NS = EM6_UPDATE_X;
+			else
+					NS = MOVE_EM7;
+			end
 			EM6_END: NS = MOVE_EM7;
 			
 			// Enemy Missile 7 graphics
@@ -840,20 +652,16 @@ module missile_control(
 			begin
 				NS = EM8_START;
 			end
-			EM7_CHECK_Y: 
-			begin
-				if (em7_currY < em7_y_final)
-				begin
-					NS = EM7_DRAW;
-				end
-				else
-				begin
-					NS = MOVE_EM8;
-				end
-			end
+			EM7_CHECK_Y: NS = EM7_DRAW;
 			EM7_UPDATE_Y: NS = EM7_CHECK_Y;
 			EM7_UPDATE_X: NS = EM7_UPDATE_Y;
-			EM7_DRAW: NS = MOVE_EM8;
+			EM7_DRAW:
+			begin
+			if (em7_active == 1'b0 & em7_currY < em7_y_final)
+					NS = EM7_UPDATE_X;
+			else
+					NS = MOVE_EM8;
+			end
 			EM7_END: NS = MOVE_EM8;
 			
 			// Enemy Missile 8 graphics
@@ -862,20 +670,16 @@ module missile_control(
 			begin
 				NS = EM9_START;
 			end
-			EM8_CHECK_Y: 
-			begin
-				if (em8_currY < em8_y_final)
-				begin
-					NS = EM8_DRAW;
-				end
-				else
-				begin
-					NS = MOVE_EM9;
-				end
-			end
+			EM8_CHECK_Y: NS = EM8_DRAW;
 			EM8_UPDATE_Y: NS = EM8_CHECK_Y;
 			EM8_UPDATE_X: NS = EM8_UPDATE_Y;
-			EM8_DRAW: NS = MOVE_EM9;
+			EM8_DRAW:
+			begin
+			if (em8_active == 1'b0 & em8_currY < em8_y_final)
+					NS = EM8_UPDATE_X;
+			else
+					NS = MOVE_EM9;
+			end
 			EM8_END: NS = MOVE_EM9;
 			
 			// Enemy Missile 9 graphics
@@ -884,20 +688,16 @@ module missile_control(
 			begin
 				NS = EM10_START;
 			end
-			EM9_CHECK_Y: 
-			begin
-				if (em9_currY < em9_y_final)
-				begin
-					NS = EM9_DRAW;
-				end
-				else
-				begin
-					NS = MOVE_EM10;
-				end
-			end
+			EM9_CHECK_Y: NS = EM9_DRAW;
 			EM9_UPDATE_Y: NS = EM9_CHECK_Y;
 			EM9_UPDATE_X: NS = EM9_UPDATE_Y;
-			EM9_DRAW: NS = MOVE_EM10;
+			EM9_DRAW:
+			begin
+			if (em9_active == 1'b0 & em9_currY < em9_y_final)
+					NS = EM9_UPDATE_X;
+			else
+					NS = MOVE_EM10;
+			end
 			EM9_END: NS = MOVE_EM10;
 			
 			// Enemy Missile 10 graphics
@@ -906,20 +706,16 @@ module missile_control(
 			begin
 				NS = EM11_START;
 			end
-			EM10_CHECK_Y: 
-			begin
-				if (em10_currY < em10_y_final)
-				begin
-					NS = EM10_DRAW;
-				end
-				else
-				begin
-					NS = MOVE_EM11;
-				end
-			end
+			EM10_CHECK_Y: NS = EM10_DRAW;
 			EM10_UPDATE_Y: NS = EM10_CHECK_Y;
 			EM10_UPDATE_X: NS = EM10_UPDATE_Y;
-			EM10_DRAW: NS = MOVE_EM11;
+			EM10_DRAW:
+			begin
+			if (em10_active == 1'b0 & em10_currY < em10_y_final)
+					NS = EM10_UPDATE_X;
+			else
+					NS = MOVE_EM11;
+			end
 			EM10_END: NS = MOVE_EM11;
 			
 			// Enemy Missile 11 graphics
@@ -928,20 +724,16 @@ module missile_control(
 			begin
 				NS = EM12_START;
 			end
-			EM11_CHECK_Y: 
-			begin
-				if (em11_currY < em11_y_final)
-				begin
-					NS = EM11_DRAW;
-				end
-				else
-				begin
-					NS = MOVE_EM12;
-				end
-			end
+			EM11_CHECK_Y: NS = EM11_DRAW;
 			EM11_UPDATE_Y: NS = EM11_CHECK_Y;
 			EM11_UPDATE_X: NS = EM11_UPDATE_Y;
-			EM11_DRAW: NS = MOVE_EM12;
+			EM11_DRAW: 
+			begin
+			if (em11_active == 1'b0 & em11_currY < em11_y_final)
+					NS = EM11_UPDATE_X;
+			else
+					NS = MOVE_EM12;
+			end
 			EM11_END: NS = MOVE_EM12;
 			
 			// Enemy Missile 12 graphics
@@ -950,20 +742,16 @@ module missile_control(
 			begin
 				NS = CHECK_MISSILES;
 			end
-			EM12_CHECK_Y: 
-			begin
-				if (em12_currY < em12_y_final)
-				begin
-					NS = EM12_DRAW;
-				end
-				else
-				begin
-					NS = CHECK_MISSILES;
-				end
-			end
+			EM12_CHECK_Y: NS = EM12_DRAW;
 			EM12_UPDATE_Y: NS = EM12_CHECK_Y;
 			EM12_UPDATE_X: NS = EM12_UPDATE_Y;
-			EM12_DRAW: NS = CHECK_MISSILES;
+			EM12_DRAW: 
+			begin
+				if (em12_active == 1'b0 & em12_currY < em12_y_final)
+					NS = EM12_UPDATE_X;
+				else
+					NS = CHECK_MISSILES;
+			end
 			EM12_END: NS = CHECK_MISSILES;
 			
 			
@@ -971,101 +759,29 @@ module missile_control(
 			// ---------------------------------------------------------------------
 			GAME_RUNNER: NS = MOVE_EM1;
 			
-			MOVE_EM1:
-			begin
-				if (em1_active == 1'b1)
-					NS = EM1_UPDATE_X;
-				else
-					NS = MOVE_EM2;
-			end
+			MOVE_EM1: NS = EM1_UPDATE_X;
 			
-			MOVE_EM2:
-			begin
-				if (em2_active == 1'b1)
-					NS = EM2_UPDATE_X;
-				else
-					NS = MOVE_EM3;
-			end
+			MOVE_EM2: NS = EM2_UPDATE_X;
 			
-			MOVE_EM3:
-			begin
-				if (em3_active == 1'b1)
-					NS = EM3_UPDATE_X;
-				else
-					NS = MOVE_EM4;
-			end
+			MOVE_EM3: NS = EM3_UPDATE_X;
 			
-			MOVE_EM4:
-			begin
-				if (em4_active == 1'b1)
-					NS = EM4_UPDATE_X;
-				else
-					NS = MOVE_EM5;
-			end
+			MOVE_EM4: NS = EM4_UPDATE_X;
 			
-			MOVE_EM5:
-			begin
-				if (em5_active == 1'b1)
-					NS = EM5_UPDATE_X;
-				else
-					NS = MOVE_EM6;
-			end
+			MOVE_EM5: NS = EM5_UPDATE_X;
+
+			MOVE_EM6: NS = EM6_UPDATE_X;
 			
-			MOVE_EM6:
-			begin
-				if (em6_active == 1'b1)
-					NS = EM6_UPDATE_X;
-				else
-					NS = MOVE_EM7;
-			end
+			MOVE_EM7: NS = EM7_UPDATE_X;
 			
-			MOVE_EM7:
-			begin
-				if (em7_active == 1'b1)
-					NS = EM7_UPDATE_X;
-				else
-					NS = MOVE_EM8;
-			end
+			MOVE_EM8: NS = EM8_UPDATE_X;
 			
-			MOVE_EM8:
-			begin
-				if (em8_active == 1'b1)
-					NS = EM8_UPDATE_X;
-				else
-					NS = MOVE_EM9;
-			end
-			
-			MOVE_EM9:
-			begin
-				if (em9_active == 1'b1)
-					NS = EM9_UPDATE_X;
-				else
-					NS = MOVE_EM10;
-			end
-			
-			MOVE_EM10:
-			begin
-				if (em10_active == 1'b1)
-					NS = EM10_UPDATE_X;
-				else
-					NS = MOVE_EM11;
-			end
-			
-			MOVE_EM11:
-			begin
-				if (em11_active == 1'b1)
-					NS = EM11_UPDATE_X;
-				else
-					NS = MOVE_EM12;
-			end
-			
-			MOVE_EM12:
-			begin
-				if (em12_active == 1'b1)
-					NS = EM12_UPDATE_X;
-				else
-					NS = CHECK_MISSILES;
-			end
+			MOVE_EM9: NS = EM9_UPDATE_X;
+					
+			MOVE_EM10: NS = EM10_UPDATE_X;
+
+			MOVE_EM11: NS = EM11_UPDATE_X;
+
+			MOVE_EM12: NS = EM12_UPDATE_X;
 			
 			CHECK_MISSILES: NS = GAME_WAIT;
 			GAME_WAIT:
@@ -1259,10 +975,21 @@ module missile_control(
 				end
 				EM1_DRAW:
 				begin
-					color <= missile_color;
+					if (em1_active == 1'b1)
+						color <= missile_color;
+					else
+						color <= back_color;
 					x <= em1_currX;
 					y <= em1_currY;
+					
+					if (em1_currY >= em1_y_final)
+					begin
+						em1_active = 1'b0;
+						em1_currX <= em1_x_init;
+						em1_currY <= em1_y_init;
+					end
 				end
+
 				
 				// Enemy missle 2 graphics
 				// ---------------------------------------------------------------------
@@ -1281,10 +1008,21 @@ module missile_control(
 				end
 				EM2_DRAW:
 				begin
-					color <= missile_color;
+					if (em2_active == 1'b1)
+						color <= missile_color;
+					else
+						color <= back_color;
 					x <= em2_currX;
 					y <= em2_currY;
+					
+					if (em2_currY >= em2_y_final)
+					begin
+						em2_active = 1'b0;
+						em2_currX <= em2_x_init;
+						em2_currY <= em2_y_init;
+					end
 				end
+
 				
 				// Enemy missle 3 graphics
 				// ---------------------------------------------------------------------
@@ -1292,10 +1030,6 @@ module missile_control(
 				begin
 					em3_currX <= em3_x_init;
 					em3_currY <= em3_y_init;
-					
-					color <= missile_color;
-					x <= em3_currX;
-					y <= em3_currY;
 				end
 				EM3_UPDATE_Y:
 				begin
@@ -1307,10 +1041,21 @@ module missile_control(
 				end
 				EM3_DRAW:
 				begin
-					color <= missile_color;
+					if (em3_active == 1'b1)
+						color <= missile_color;
+					else
+						color <= back_color;
 					x <= em3_currX;
 					y <= em3_currY;
+					
+					if (em3_currY >= em3_y_final)
+					begin
+						em3_active = 1'b0;
+						em3_currX <= em3_x_init;
+						em3_currY <= em3_y_init;
+					end
 				end
+
 				
 				// Enemy missle 4 graphics
 				// ---------------------------------------------------------------------
@@ -1318,10 +1063,6 @@ module missile_control(
 				begin
 					em4_currX <= em4_x_init;
 					em4_currY <= em4_y_init;
-					
-					color <= missile_color;
-					x <= em4_currX;
-					y <= em4_currY;
 				end
 				EM4_UPDATE_Y:
 				begin
@@ -1333,10 +1074,21 @@ module missile_control(
 				end
 				EM4_DRAW:
 				begin
-					color <= missile_color;
+					if (em4_active == 1'b1)
+						color <= missile_color;
+					else
+						color <= back_color;
 					x <= em4_currX;
 					y <= em4_currY;
+					
+					if (em4_currY >= em4_y_final)
+					begin
+						em4_active = 1'b0;
+						em4_currX <= em4_x_init;
+						em4_currY <= em4_y_init;
+					end
 				end
+
 				
 				// Enemy missile 5 graphics
 				// ---------------------------------------------------------------------
@@ -1344,10 +1096,6 @@ module missile_control(
 				begin
 					em5_currX <= em5_x_init;
 					em5_currY <= em5_y_init;
-					
-					color <= missile_color;
-					x <= em5_currX;
-					y <= em5_currY;
 				end
 				EM5_UPDATE_Y:
 				begin
@@ -1359,22 +1107,27 @@ module missile_control(
 				end
 				EM5_DRAW:
 				begin
-					color <= missile_color;
+					if (em5_active == 1'b1)
+						color <= missile_color;
+					else
+						color <= back_color;
 					x <= em5_currX;
 					y <= em5_currY;
+					
+					if (em5_currY >= em5_y_final)
+					begin
+						em5_active = 1'b0;
+						em5_currX <= em5_x_init;
+						em5_currY <= em5_y_init;
+					end
 				end
-
-				
+			
 				// Enemy missile 6 graphics
 				// ---------------------------------------------------------------------
 				EM6_START:
 				begin
 					em6_currX <= em6_x_init;
 					em6_currY <= em6_y_init;
-					
-					color <= missile_color;
-					x <= em6_currX;
-					y <= em6_currY;
 				end
 				EM6_UPDATE_Y:
 				begin
@@ -1386,9 +1139,19 @@ module missile_control(
 				end
 				EM6_DRAW:
 				begin
-					color <= missile_color;
+					if (em6_active == 1'b1)
+						color <= missile_color;
+					else
+						color <= back_color;
 					x <= em6_currX;
 					y <= em6_currY;
+					
+					if (em6_currY >= em6_y_final)
+					begin
+						em6_active = 1'b0;
+						em6_currX <= em6_x_init;
+						em6_currY <= em6_y_init;
+					end
 				end
 				
 				// Enemy missile 7 graphics
@@ -1397,10 +1160,6 @@ module missile_control(
 				begin
 					em7_currX <= em7_x_init;
 					em7_currY <= em7_y_init;
-					
-					color <= missile_color;
-					x <= em7_currX;
-					y <= em7_currY;
 				end
 				EM7_UPDATE_Y:
 				begin
@@ -1412,11 +1171,20 @@ module missile_control(
 				end
 				EM7_DRAW:
 				begin
-					color <= missile_color;
+					if (em7_active == 1'b1)
+						color <= missile_color;
+					else
+						color <= back_color;
 					x <= em7_currX;
 					y <= em7_currY;
+					
+					if (em7_currY >= em7_y_final)
+					begin
+						em7_active = 1'b0;
+						em7_currX <= em7_x_init;
+						em7_currY <= em7_y_init;
+					end
 				end
-
 
 				// Enemy missile 8 graphics
 				// ---------------------------------------------------------------------
@@ -1424,10 +1192,6 @@ module missile_control(
 				begin
 					em8_currX <= em8_x_init;
 					em8_currY <= em8_y_init;
-					
-					color <= missile_color;
-					x <= em8_currX;
-					y <= em8_currY;
 				end
 				EM8_UPDATE_Y:
 				begin
@@ -1439,22 +1203,27 @@ module missile_control(
 				end
 				EM8_DRAW:
 				begin
-					color <= missile_color;
+					if (em8_active == 1'b1)
+						color <= missile_color;
+					else
+						color <= back_color;
 					x <= em8_currX;
 					y <= em8_currY;
+					
+					if (em8_currY >= em8_y_final)
+					begin
+						em8_active = 1'b0;
+						em8_currX <= em8_x_init;
+						em8_currY <= em8_y_init;
+					end
 				end
-				
-				
+			
 				// Enemy missile 9 graphics
 				// ---------------------------------------------------------------------
 				EM9_START:
 				begin
 					em9_currX <= em9_x_init;
 					em9_currY <= em9_y_init;
-					
-					color <= missile_color;
-					x <= em9_currX;
-					y <= em9_currY;
 				end
 				EM9_UPDATE_Y:
 				begin
@@ -1466,9 +1235,19 @@ module missile_control(
 				end
 				EM9_DRAW:
 				begin
-					color <= missile_color;
+					if (em9_active == 1'b1)
+						color <= missile_color;
+					else
+						color <= back_color;
 					x <= em9_currX;
 					y <= em9_currY;
+					
+					if (em9_currY >= em9_y_final)
+					begin
+						em9_active = 1'b0;
+						em9_currX <= em9_x_init;
+						em9_currY <= em9_y_init;
+					end
 				end
 				
 				// Enemy missile 10 graphics
@@ -1477,10 +1256,6 @@ module missile_control(
 				begin
 					em10_currX <= em10_x_init;
 					em10_currY <= em10_y_init;
-					
-					color <= missile_color;
-					x <= em10_currX;
-					y <= em10_currY;
 				end
 				EM10_UPDATE_Y:
 				begin
@@ -1492,9 +1267,19 @@ module missile_control(
 				end
 				EM10_DRAW:
 				begin
-					color <= missile_color;
+					if (em10_active == 1'b1)
+						color <= missile_color;
+					else
+						color <= back_color;
 					x <= em10_currX;
 					y <= em10_currY;
+					
+					if (em10_currY >= em10_y_final)
+					begin
+						em10_active = 1'b0;
+						em10_currX <= em10_x_init;
+						em10_currY <= em10_y_init;
+					end
 				end
 				
 				// Enemy missile 11 graphics
@@ -1503,10 +1288,6 @@ module missile_control(
 				begin
 					em11_currX <= em11_x_init;
 					em11_currY <= em11_y_init;
-					
-					color <= missile_color;
-					x <= em11_currX;
-					y <= em11_currY;
 				end
 				EM11_UPDATE_Y:
 				begin
@@ -1518,10 +1299,21 @@ module missile_control(
 				end
 				EM11_DRAW:
 				begin
-					color <= missile_color;
+					if (em11_active == 1'b1)
+						color <= missile_color;
+					else
+						color <= back_color;
 					x <= em11_currX;
 					y <= em11_currY;
+					
+					if (em11_currY >= em11_y_final)
+					begin
+						em11_active = 1'b0;
+						em11_currX <= em11_x_init;
+						em11_currY <= em11_y_init;
+					end
 				end
+
 				
 				// Enemy missile 12 graphics
 				// ---------------------------------------------------------------------
@@ -1529,10 +1321,6 @@ module missile_control(
 				begin
 					em12_currX <= em12_x_init;
 					em12_currY <= em12_y_init;
-					
-					color <= missile_color;
-					x <= em12_currX;
-					y <= em12_currY;
 				end
 				EM12_UPDATE_Y:
 				begin
@@ -1544,9 +1332,19 @@ module missile_control(
 				end
 				EM12_DRAW:
 				begin
-					color <= missile_color;
+					if (em12_active == 1'b1)
+						color <= missile_color;
+					else
+						color <= back_color;
 					x <= em12_currX;
 					y <= em12_currY;
+					
+					if (em12_currY >= em12_y_final)
+					begin
+						em12_active = 1'b0;
+						em12_currX <= em12_x_init;
+						em12_currY <= em12_y_init;
+					end
 				end
 				
 			// GAME RUNNER
