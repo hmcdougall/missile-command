@@ -28,6 +28,7 @@ module missile_control(
 	reg [31:0]y;
 	reg [2:0]color;
 	reg back_color = 3'b000;
+	
 	//ps2Keyboard variables
 	//----------------------------------------------------------------
 	reg [3:0]arrows;
@@ -45,7 +46,8 @@ module missile_control(
 	
 	// grid color parameters
 	parameter city_color = 3'b010,
-	          missile_color = 3'b101,
+	          enemy_missile_color = 3'b101,
+				 player_missile_color = 3'b110,
 	          default_color = 3'b111,
 				 game_over_color = 3'b100;
 	
@@ -461,16 +463,17 @@ module missile_control(
 	reg [31:0] em12_currY = 32'd0;
 	reg em12_active;
 	
-	// enemy missile
+	// player missile
+	//-----------------------------------------------------------------
 	wire [31:0] pm1_x_init = 32'd160;
 	wire [31:0] pm1_y_init = 32'd210;
 	wire [31:0] pm1_x_final = 32'd64;
 	wire [31:0] pm1_y_final = 32'd53;
-	wire [31:0] pm1_dx = 32'd12;
-	wire [31:0] pm1_dy = 32'd6;
+	wire [31:0] pm1_dx = 32'd6;
+	wire [31:0] pm1_dy = 32'd12;
 	reg [31:0] pm1_currX = 32'd160;
 	reg [31:0] pm1_currY = 32'd210;
-	reg pm1_active = 1'b0;
+	reg pm1_active = 1'b1;
 
 	wire [31:0] pm2_x_init = 32'd160;
 	wire [31:0] pm2_y_init = 32'd210;
@@ -480,7 +483,7 @@ module missile_control(
 	wire [31:0] pm2_dy = 32'd6;
 	reg [31:0] pm2_currX = 32'd160;
 	reg [31:0] pm2_currY = 32'd210;
-	reg pm2_active = 1'b0;
+	reg pm2_active = 1'b1;
 
 	wire [31:0] pm3_x_init = 32'd160;
 	wire [31:0] pm3_y_init = 32'd210;
@@ -490,27 +493,27 @@ module missile_control(
 	wire [31:0] pm3_dy = 32'd6;
 	reg [31:0] pm3_currX = 32'd160;
 	reg [31:0] pm3_currY = 32'd210;
-	reg pm3_active = 1'b0;
+	reg pm3_active = 1'b1;
 
 	wire [31:0] pm4_x_init = 32'd160;
 	wire [31:0] pm4_y_init = 32'd210;
 	wire [31:0] pm4_x_final = 32'd256;
 	wire [31:0] pm4_y_final = 32'd53;
-	wire [31:0] pm4_dx = 32'd12;
-	wire [31:0] pm4_dy = 32'd6;
+	wire [31:0] pm4_dx = 32'd6;
+	wire [31:0] pm4_dy = 32'd12;
 	reg [31:0] pm4_currX = 32'd160;
 	reg [31:0] pm4_currY = 32'd210;
-	reg pm4_active = 1'b0;
+	reg pm4_active = 1'b1;
 
 	wire [31:0] pm5_x_init = 32'd160;
 	wire [31:0] pm5_y_init = 32'd210;
 	wire [31:0] pm5_x_final = 32'd64;
 	wire [31:0] pm5_y_final = 32'd105;
-	wire [31:0] pm5_dx = 32'd12;
-	wire [31:0] pm5_dy = 32'd7;
+	wire [31:0] pm5_dx = 32'd7;
+	wire [31:0] pm5_dy = 32'd12;
 	reg [31:0] pm5_currX = 32'd160;
 	reg [31:0] pm5_currY = 32'd210;
-	reg pm5_active = 1'b0;
+	reg pm5_active = 1'b1;
 
 	wire [31:0] pm6_x_init = 32'd160;
 	wire [31:0] pm6_y_init = 32'd210;
@@ -520,7 +523,7 @@ module missile_control(
 	wire [31:0] pm6_dy = 32'd7;
 	reg [31:0] pm6_currX = 32'd160;
 	reg [31:0] pm6_currY = 32'd210;
-	reg pm6_active = 1'b0;
+	reg pm6_active = 1'b1;
 
 	wire [31:0] pm7_x_init = 32'd160;
 	wire [31:0] pm7_y_init = 32'd210;
@@ -530,27 +533,27 @@ module missile_control(
 	wire [31:0] pm7_dy = 32'd7;
 	reg [31:0] pm7_currX = 32'd160;
 	reg [31:0] pm7_currY = 32'd210;
-	reg pm7_active = 1'b0;
+	reg pm7_active = 1'b1;
 
 	wire [31:0] pm8_x_init = 32'd160;
 	wire [31:0] pm8_y_init = 32'd210;
 	wire [31:0] pm8_x_final = 32'd256;
 	wire [31:0] pm8_y_final = 32'd105;
-	wire [31:0] pm8_dx = 32'd12;
-	wire [31:0] pm8_dy = 32'd7;
+	wire [31:0] pm8_dx = 32'd7;
+	wire [31:0] pm8_dy = 32'd12;
 	reg [31:0] pm8_currX = 32'd160;
 	reg [31:0] pm8_currY = 32'd210;
-	reg pm8_active = 1'b0;
+	reg pm8_active = 1'b1;
 
 	wire [31:0] pm9_x_init = 32'd160;
 	wire [31:0] pm9_y_init = 32'd210;
 	wire [31:0] pm9_x_final = 32'd64;
 	wire [31:0] pm9_y_final = 32'd158;
-	wire [31:0] pm9_dx = 32'd12;
-	wire [31:0] pm9_dy = 32'd7;
+	wire [31:0] pm9_dx = 32'd7;
+	wire [31:0] pm9_dy = 32'd12;
 	reg [31:0] pm9_currX = 32'd160;
 	reg [31:0] pm9_currY = 32'd210;
-	reg pm9_active = 1'b0;
+	reg pm9_active = 1'b1;
 
 	wire [31:0] pm10_x_init = 32'd160;
 	wire [31:0] pm10_y_init = 32'd210;
@@ -560,7 +563,7 @@ module missile_control(
 	wire [31:0] pm10_dy = 32'd7;
 	reg [31:0] pm10_currX = 32'd160;
 	reg [31:0] pm10_currY = 32'd210;
-	reg pm10_active = 1'b0;
+	reg pm10_active = 1'b1;
 
 	wire [31:0] pm11_x_init = 32'd160;
 	wire [31:0] pm11_y_init = 32'd210;
@@ -570,17 +573,17 @@ module missile_control(
 	wire [31:0] pm11_dy = 32'd7;
 	reg [31:0] pm11_currX = 32'd160;
 	reg [31:0] pm11_currY = 32'd210;
-	reg pm11_active = 1'b0;
+	reg pm11_active = 1'b1;
 
 	wire [31:0] pm12_x_init = 32'd160;
 	wire [31:0] pm12_y_init = 32'd210;
 	wire [31:0] pm12_x_final = 32'd256;
 	wire [31:0] pm12_y_final = 32'd158;
-	wire [31:0] pm12_dx = 32'd12;
-	wire [31:0] pm12_dy = 32'd7;
+	wire [31:0] pm12_dx = 32'd7;
+	wire [31:0] pm12_dy = 32'd12;
 	reg [31:0] pm12_currX = 32'd160;
 	reg [31:0] pm12_currY = 32'd210;
-	reg pm12_active = 1'b0;
+	reg pm12_active = 1'b1;
 
 	
 	//missile spawning randomizer
@@ -1815,7 +1818,7 @@ module missile_control(
 				EM1_DRAW:
 				begin
 					if (em1_active == 1'b1)
-						color <= missile_color;
+						color <= enemy_missile_color;
 					else
 						color <= back_color;
 					x <= em1_currX;
@@ -1848,7 +1851,7 @@ module missile_control(
 				EM2_DRAW:
 				begin
 					if (em2_active == 1'b1)
-						color <= missile_color;
+						color <= enemy_missile_color;
 					else
 						color <= back_color;
 					x <= em2_currX;
@@ -1881,7 +1884,7 @@ module missile_control(
 				EM3_DRAW:
 				begin
 					if (em3_active == 1'b1)
-						color <= missile_color;
+						color <= enemy_missile_color;
 					else
 						color <= back_color;
 					x <= em3_currX;
@@ -1914,7 +1917,7 @@ module missile_control(
 				EM4_DRAW:
 				begin
 					if (em4_active == 1'b1)
-						color <= missile_color;
+						color <= enemy_missile_color;
 					else
 						color <= back_color;
 					x <= em4_currX;
@@ -1947,7 +1950,7 @@ module missile_control(
 				EM5_DRAW:
 				begin
 					if (em5_active == 1'b1)
-						color <= missile_color;
+						color <= enemy_missile_color;
 					else
 						color <= back_color;
 					x <= em5_currX;
@@ -1979,7 +1982,7 @@ module missile_control(
 				EM6_DRAW:
 				begin
 					if (em6_active == 1'b1)
-						color <= missile_color;
+						color <= enemy_missile_color;
 					else
 						color <= back_color;
 					x <= em6_currX;
@@ -2011,7 +2014,7 @@ module missile_control(
 				EM7_DRAW:
 				begin
 					if (em7_active == 1'b1)
-						color <= missile_color;
+						color <= enemy_missile_color;
 					else
 						color <= back_color;
 					x <= em7_currX;
@@ -2043,7 +2046,7 @@ module missile_control(
 				EM8_DRAW:
 				begin
 					if (em8_active == 1'b1)
-						color <= missile_color;
+						color <= enemy_missile_color;
 					else
 						color <= back_color;
 					x <= em8_currX;
@@ -2075,7 +2078,7 @@ module missile_control(
 				EM9_DRAW:
 				begin
 					if (em9_active == 1'b1)
-						color <= missile_color;
+						color <= enemy_missile_color;
 					else
 						color <= back_color;
 					x <= em9_currX;
@@ -2107,7 +2110,7 @@ module missile_control(
 				EM10_DRAW:
 				begin
 					if (em10_active == 1'b1)
-						color <= missile_color;
+						color <= enemy_missile_color;
 					else
 						color <= back_color;
 					x <= em10_currX;
@@ -2139,7 +2142,7 @@ module missile_control(
 				EM11_DRAW:
 				begin
 					if (em11_active == 1'b1)
-						color <= missile_color;
+						color <= enemy_missile_color;
 					else
 						color <= back_color;
 					x <= em11_currX;
@@ -2172,7 +2175,7 @@ module missile_control(
 				EM12_DRAW:
 				begin
 					if (em12_active == 1'b1)
-						color <= missile_color;
+						color <= enemy_missile_color;
 					else
 						color <= back_color;
 					x <= em12_currX;
@@ -2185,6 +2188,395 @@ module missile_control(
 						em12_currY <= em12_y_init;
 					end
 				end
+				
+				
+				// Player missile 1 graphics
+				// ---------------------------------------------------------------------
+				PM1_START:
+				begin
+					pm1_currX <= pm1_x_init;
+					pm1_currY <= pm1_y_init;
+				end
+				PM1_UPDATE_Y:
+				begin
+					pm1_currY <= pm1_currY - pm1_dy;
+				end
+				PM1_UPDATE_X:
+				begin
+					pm1_currX <= pm1_currX - pm1_dx;
+				end
+				PM1_DRAW:
+				begin
+					if (pm1_active == 1'b1)
+						color <= player_missile_color;
+					else
+						color <= back_color;
+					x <= pm1_currX;
+					y <= pm1_currY;
+					
+					if (pm1_currY < pm1_y_final)
+					begin
+						pm1_active = 1'b0;
+						pm1_currX <= pm1_x_init;
+						pm1_currY <= pm1_y_init;
+					end
+				end
+
+				// Player missile 2 graphics
+				// ---------------------------------------------------------------------
+				PM2_START:
+				begin
+					pm2_currX <= pm2_x_init;
+					pm2_currY <= pm2_y_init;
+				end
+				PM2_UPDATE_Y:
+				begin
+					pm2_currY <= pm2_currY - pm2_dy;
+				end
+				PM2_UPDATE_X:
+				begin
+					pm2_currX <= pm2_currX - pm2_dx;
+				end
+				PM2_DRAW:
+				begin
+					if (pm2_active == 1'b1)
+						color <= player_missile_color;
+					else
+						color <= back_color;
+					x <= pm2_currX;
+					y <= pm2_currY;
+					
+					if (pm2_currY < pm2_y_final)
+					begin
+						pm2_active = 1'b0;
+						pm2_currX <= pm2_x_init;
+						pm2_currY <= pm2_y_init;
+					end
+				end
+
+				// Player missile 3 graphics
+				// ---------------------------------------------------------------------
+				PM3_START:
+				begin
+					pm3_currX <= pm3_x_init;
+					pm3_currY <= pm3_y_init;
+				end
+				PM3_UPDATE_Y:
+				begin
+					pm3_currY <= pm3_currY - pm3_dy;
+				end
+				PM3_UPDATE_X:
+				begin
+					pm3_currX <= pm3_currX + pm3_dx;
+				end
+				PM3_DRAW:
+				begin
+					if (pm3_active == 1'b1)
+						color <= player_missile_color;
+					else
+						color <= back_color;
+					x <= pm3_currX;
+					y <= pm3_currY;
+					
+					if (pm3_currY < pm3_y_final)
+					begin
+						pm3_active = 1'b0;
+						pm3_currX <= pm3_x_init;
+						pm3_currY <= pm3_y_init;
+					end
+				end
+
+				// Player missile 4 graphics
+				// ---------------------------------------------------------------------
+				PM4_START:
+				begin
+					pm4_currX <= pm4_x_init;
+					pm4_currY <= pm4_y_init;
+				end
+				PM4_UPDATE_Y:
+				begin
+					pm4_currY <= pm4_currY - pm4_dy;
+				end
+				PM4_UPDATE_X:
+				begin
+					pm4_currX <= pm4_currX + pm4_dx;
+				end
+				PM4_DRAW:
+				begin
+					if (pm4_active == 1'b1)
+						color <= player_missile_color;
+					else
+						color <= back_color;
+					x <= pm4_currX;
+					y <= pm4_currY;
+					
+					if (pm4_currY < pm4_y_final)
+					begin
+						pm4_active = 1'b0;
+						pm4_currX <= pm4_x_init;
+						pm4_currY <= pm4_y_init;
+					end
+				end
+
+				// Player missile 5 graphics
+				// ---------------------------------------------------------------------
+				PM5_START:
+				begin
+					pm5_currX <= pm5_x_init;
+					pm5_currY <= pm5_y_init;
+				end
+				PM5_UPDATE_Y:
+				begin
+					pm5_currY <= pm5_currY - pm5_dy;
+				end
+				PM5_UPDATE_X:
+				begin
+					pm5_currX <= pm5_currX - pm5_dx;
+				end
+				PM5_DRAW:
+				begin
+					if (pm5_active == 1'b1)
+						color <= player_missile_color;
+					else
+						color <= back_color;
+					x <= pm5_currX;
+					y <= pm5_currY;
+					
+					if (pm5_currY < pm5_y_final)
+					begin
+						pm5_active = 1'b0;
+						pm5_currX <= pm5_x_init;
+						pm5_currY <= pm5_y_init;
+					end
+				end
+
+				// Player missile 6 graphics
+				// ---------------------------------------------------------------------
+				PM6_START:
+				begin
+					pm6_currX <= pm6_x_init;
+					pm6_currY <= pm6_y_init;
+				end
+				PM6_UPDATE_Y:
+				begin
+					pm6_currY <= pm6_currY - pm6_dy;
+				end
+				PM6_UPDATE_X:
+				begin
+					pm6_currX <= pm6_currX - pm6_dx;
+				end
+				PM6_DRAW:
+				begin
+					if (pm6_active == 1'b1)
+						color <= player_missile_color;
+					else
+						color <= back_color;
+					x <= pm6_currX;
+					y <= pm6_currY;
+					
+					if (pm6_currY < pm6_y_final)
+					begin
+						pm6_active = 1'b0;
+						pm6_currX <= pm6_x_init;
+						pm6_currY <= pm6_y_init;
+					end
+				end
+
+				// Player missile 7 graphics
+				// ---------------------------------------------------------------------
+				PM7_START:
+				begin
+					pm7_currX <= pm7_x_init;
+					pm7_currY <= pm7_y_init;
+				end
+				PM7_UPDATE_Y:
+				begin
+					pm7_currY <= pm7_currY - pm7_dy;
+				end
+				PM7_UPDATE_X:
+				begin
+					pm7_currX <= pm7_currX + pm7_dx;
+				end
+				PM7_DRAW:
+				begin
+					if (pm7_active == 1'b1)
+						color <= player_missile_color;
+					else
+						color <= back_color;
+					x <= pm7_currX;
+					y <= pm7_currY;
+					
+					if (pm7_currY < pm7_y_final)
+					begin
+						pm7_active = 1'b0;
+						pm7_currX <= pm7_x_init;
+						pm7_currY <= pm7_y_init;
+					end
+				end
+	
+				// Player missile 8 graphics
+				// ---------------------------------------------------------------------
+				PM8_START:
+				begin
+					pm8_currX <= pm8_x_init;
+					pm8_currY <= pm8_y_init;
+				end
+				PM8_UPDATE_Y:
+				begin
+					pm8_currY <= pm8_currY - pm8_dy;
+				end
+				PM8_UPDATE_X:
+				begin
+					pm8_currX <= pm8_currX + pm8_dx;
+				end
+				PM8_DRAW:
+				begin
+					if (pm8_active == 1'b1)
+						color <= player_missile_color;
+					else
+						color <= back_color;
+					x <= pm8_currX;
+					y <= pm8_currY;
+					
+					if (pm8_currY < pm8_y_final)
+					begin
+						pm8_active = 1'b0;
+						pm8_currX <= pm8_x_init;
+						pm8_currY <= pm8_y_init;
+					end
+				end
+
+				//Player missile 9 graphics
+				// ---------------------------------------------------------------------
+				PM9_START:
+				begin
+					pm9_currX <= pm9_x_init;
+					pm9_currY <= pm9_y_init;
+				end
+				PM9_UPDATE_Y:
+				begin
+					pm9_currY <= pm9_currY - pm9_dy;
+				end
+				PM9_UPDATE_X:
+				begin
+					pm9_currX <= pm9_currX - pm9_dx;
+				end
+				PM9_DRAW:
+				begin
+					if (pm9_active == 1'b1)
+						color <= player_missile_color;
+					else
+						color <= back_color;
+					x <= pm9_currX;
+					y <= pm9_currY;
+					
+					if (pm9_currY < pm9_y_final)
+					begin
+						pm9_active = 1'b0;
+						pm9_currX <= pm9_x_init;
+						pm9_currY <= pm9_y_init;
+					end
+				end
+	
+				// Player missile 10 graphics
+				// ---------------------------------------------------------------------
+				PM10_START:
+				begin
+					pm10_currX <= pm10_x_init;
+					pm10_currY <= pm10_y_init;
+				end
+				PM10_UPDATE_Y:
+				begin
+					pm10_currY <= pm10_currY - pm10_dy;
+				end
+				PM10_UPDATE_X:
+				begin
+					pm10_currX <= pm10_currX - pm10_dx;
+				end
+				PM10_DRAW:
+				begin
+					if (pm10_active == 1'b1)
+						color <= player_missile_color;
+					else
+						color <= back_color;
+					x <= pm10_currX;
+					y <= pm10_currY;
+					
+					if (pm10_currY < pm10_y_final)
+					begin
+						pm10_active = 1'b0;
+						pm10_currX <= pm10_x_init;
+						pm10_currY <= pm10_y_init;
+					end
+				end
+
+				// Player missile 11 graphics
+				// ---------------------------------------------------------------------
+				PM11_START:
+				begin
+					pm11_currX <= pm11_x_init;
+					pm11_currY <= pm11_y_init;
+				end
+				PM11_UPDATE_Y:
+				begin
+					pm11_currY <= pm11_currY - pm11_dy;
+				end
+				PM11_UPDATE_X:
+				begin
+					pm11_currX <= pm11_currX + pm11_dx;
+				end
+				PM11_DRAW:
+				begin
+					if (pm11_active == 11'b1)
+						color <= player_missile_color;
+					else
+						color <= back_color;
+					x <= pm11_currX;
+					y <= pm11_currY;
+					
+					if (pm11_currY < pm11_y_final)
+					begin
+						pm11_active = 1'b0;
+						pm11_currX <= pm11_x_init;
+						pm11_currY <= pm11_y_init;
+					end
+				end
+
+				// Player missile 12 graphics
+				// ---------------------------------------------------------------------
+				PM12_START:
+				begin
+					pm12_currX <= pm12_x_init;
+					pm12_currY <= pm12_y_init;
+				end
+				PM12_UPDATE_Y:
+				begin
+					pm12_currY <= pm12_currY - pm12_dy;
+				end
+				PM12_UPDATE_X:
+				begin
+					pm12_currX <= pm12_currX + pm12_dx;
+				end
+				PM12_DRAW:
+				begin
+					if (pm12_active == 1'b1)
+						color <= player_missile_color;
+					else
+						color <= back_color;
+					x <= pm12_currX;
+					y <= pm12_currY;
+					
+					if (pm12_currY < pm12_y_final)
+					begin
+						pm12_active = 12'b0;
+						pm12_currX <= pm12_x_init;
+						pm12_currY <= pm12_y_init;
+					end
+				end
+
+				
+				
+				
 				MISSILE_SPAWN:
 			begin
 				
@@ -2196,7 +2588,7 @@ module missile_control(
 					if(( missile_1_hot_reg == 1) & (missile_1_target_reg == 0))
 						begin
 							em1_active <= 1'b1;
-							color <= missile_color;
+							color <= enemy_missile_color;
 					x <= 30;
 					y <= 30;
 						end
