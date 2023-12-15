@@ -208,6 +208,103 @@ module missile_control(
 		MISSILE_SPAWN = 8'd124,
 		CHECK_GAME_OVER = 8'd125,
 		
+		PM1_START = 8'd127,
+		PM1_CHECK_Y = 8'd128,
+		PM1_UPDATE_Y = 8'd129,
+		PM1_UPDATE_X = 8'd130,
+		PM1_DRAW = 8'd131,
+		PM1_END = 8'd132,
+
+		PM2_START = 8'd133,
+		PM2_CHECK_Y = 8'd134,
+		PM2_UPDATE_Y = 8'd135,
+		PM2_UPDATE_X = 8'd136,
+		PM2_DRAW = 8'd137,
+		PM2_END = 8'd138,
+
+		PM3_START = 8'd139,
+		PM3_CHECK_Y = 8'd140,
+		PM3_UPDATE_Y = 8'd141,
+		PM3_UPDATE_X = 8'd142,
+		PM3_DRAW = 8'd143,
+		PM3_END = 8'd144,
+
+		PM4_START = 8'd145,
+		PM4_CHECK_Y = 8'd146,
+		PM4_UPDATE_Y = 8'd147,
+		PM4_UPDATE_X = 8'd148,
+		PM4_DRAW = 8'd149,
+		PM4_END = 8'd150,
+
+		PM5_START = 8'd151,
+		PM5_CHECK_Y = 8'd152,
+		PM5_UPDATE_Y = 8'd153,
+		PM5_UPDATE_X = 8'd154,
+		PM5_DRAW = 8'd155,
+		PM5_END = 8'd156,
+
+		PM6_START = 8'd157,
+		PM6_CHECK_Y = 8'd158,
+		PM6_UPDATE_Y = 8'd159,
+		PM6_UPDATE_X = 8'd160,
+		PM6_DRAW = 8'd161,
+		PM6_END = 8'd162,
+
+		PM7_START = 8'd163,
+		PM7_CHECK_Y = 8'd164,
+		PM7_UPDATE_Y = 8'd165,
+		PM7_UPDATE_X = 8'd166,
+		PM7_DRAW = 8'd167,
+		PM7_END = 8'd168,
+
+		PM8_START = 8'd169,
+		PM8_CHECK_Y = 8'd170,
+		PM8_UPDATE_Y = 8'd171,
+		PM8_UPDATE_X = 8'd172,
+		PM8_DRAW = 8'd173,
+		PM8_END = 8'd174,
+
+		PM9_START = 8'd175,
+		PM9_CHECK_Y = 8'd176,
+		PM9_UPDATE_Y = 8'd177,
+		PM9_UPDATE_X = 8'd178,
+		PM9_DRAW = 8'd179,
+		PM9_END = 8'd180,
+
+		PM10_START = 8'd181,
+		PM10_CHECK_Y = 8'd182,
+		PM10_UPDATE_Y = 8'd183,
+		PM10_UPDATE_X = 8'd184,
+		PM10_DRAW = 8'd185,
+		PM10_END = 8'd186,
+
+		PM11_START = 8'd187,
+		PM11_CHECK_Y = 8'd188,
+		PM11_UPDATE_Y = 8'd189,
+		PM11_UPDATE_X = 8'd190,
+		PM11_DRAW = 8'd191,
+		PM11_END = 8'd192,
+
+		PM12_START = 8'd193,
+		PM12_CHECK_Y = 8'd194,
+		PM12_UPDATE_Y = 8'd195,
+		PM12_UPDATE_X = 8'd196,
+		PM12_DRAW = 8'd197,
+		PM12_END = 8'd198,
+
+		MOVE_PM1 = 8'd199,
+		MOVE_PM2 = 8'd200,
+		MOVE_PM3 = 8'd201,
+		MOVE_PM4 = 8'd202,
+		MOVE_PM5 = 8'd203,
+		MOVE_PM6 = 8'd204,
+		MOVE_PM7 = 8'd205,
+		MOVE_PM8 = 8'd206,
+		MOVE_PM9 = 8'd207,
+		MOVE_PM10 = 8'd208,
+		MOVE_PM11 = 8'd209,
+		MOVE_PM12 = 8'd210,
+		
 		GAME_OVER_START = 8'd247,
 		GAME_OVER_CHECK_Y = 8'd248,
 		GAME_OVER_CHECK_X = 8'd249,
@@ -363,6 +460,128 @@ module missile_control(
 	reg [31:0] em12_currX = 32'd266;
 	reg [31:0] em12_currY = 32'd0;
 	reg em12_active;
+	
+	// enemy missile
+	wire [31:0] pm1_x_init = 32'd160;
+	wire [31:0] pm1_y_init = 32'd210;
+	wire [31:0] pm1_x_final = 32'd64;
+	wire [31:0] pm1_y_final = 32'd53;
+	wire [31:0] pm1_dx = 32'd12;
+	wire [31:0] pm1_dy = 32'd6;
+	reg [31:0] pm1_currX = 32'd160;
+	reg [31:0] pm1_currY = 32'd210;
+	reg pm1_active = 1'b0;
+
+	wire [31:0] pm2_x_init = 32'd160;
+	wire [31:0] pm2_y_init = 32'd210;
+	wire [31:0] pm2_x_final = 32'd128;
+	wire [31:0] pm2_y_final = 32'd53;
+	wire [31:0] pm2_dx = 32'd4;
+	wire [31:0] pm2_dy = 32'd6;
+	reg [31:0] pm2_currX = 32'd160;
+	reg [31:0] pm2_currY = 32'd210;
+	reg pm2_active = 1'b0;
+
+	wire [31:0] pm3_x_init = 32'd160;
+	wire [31:0] pm3_y_init = 32'd210;
+	wire [31:0] pm3_x_final = 32'd192;
+	wire [31:0] pm3_y_final = 32'd53;
+	wire [31:0] pm3_dx = 32'd4;
+	wire [31:0] pm3_dy = 32'd6;
+	reg [31:0] pm3_currX = 32'd160;
+	reg [31:0] pm3_currY = 32'd210;
+	reg pm3_active = 1'b0;
+
+	wire [31:0] pm4_x_init = 32'd160;
+	wire [31:0] pm4_y_init = 32'd210;
+	wire [31:0] pm4_x_final = 32'd256;
+	wire [31:0] pm4_y_final = 32'd53;
+	wire [31:0] pm4_dx = 32'd12;
+	wire [31:0] pm4_dy = 32'd6;
+	reg [31:0] pm4_currX = 32'd160;
+	reg [31:0] pm4_currY = 32'd210;
+	reg pm4_active = 1'b0;
+
+	wire [31:0] pm5_x_init = 32'd160;
+	wire [31:0] pm5_y_init = 32'd210;
+	wire [31:0] pm5_x_final = 32'd64;
+	wire [31:0] pm5_y_final = 32'd105;
+	wire [31:0] pm5_dx = 32'd12;
+	wire [31:0] pm5_dy = 32'd7;
+	reg [31:0] pm5_currX = 32'd160;
+	reg [31:0] pm5_currY = 32'd210;
+	reg pm5_active = 1'b0;
+
+	wire [31:0] pm6_x_init = 32'd160;
+	wire [31:0] pm6_y_init = 32'd210;
+	wire [31:0] pm6_x_final = 32'd128;
+	wire [31:0] pm6_y_final = 32'd105;
+	wire [31:0] pm6_dx = 32'd4;
+	wire [31:0] pm6_dy = 32'd7;
+	reg [31:0] pm6_currX = 32'd160;
+	reg [31:0] pm6_currY = 32'd210;
+	reg pm6_active = 1'b0;
+
+	wire [31:0] pm7_x_init = 32'd160;
+	wire [31:0] pm7_y_init = 32'd210;
+	wire [31:0] pm7_x_final = 32'd192;
+	wire [31:0] pm7_y_final = 32'd105;
+	wire [31:0] pm7_dx = 32'd4;
+	wire [31:0] pm7_dy = 32'd7;
+	reg [31:0] pm7_currX = 32'd160;
+	reg [31:0] pm7_currY = 32'd210;
+	reg pm7_active = 1'b0;
+
+	wire [31:0] pm8_x_init = 32'd160;
+	wire [31:0] pm8_y_init = 32'd210;
+	wire [31:0] pm8_x_final = 32'd256;
+	wire [31:0] pm8_y_final = 32'd105;
+	wire [31:0] pm8_dx = 32'd12;
+	wire [31:0] pm8_dy = 32'd7;
+	reg [31:0] pm8_currX = 32'd160;
+	reg [31:0] pm8_currY = 32'd210;
+	reg pm8_active = 1'b0;
+
+	wire [31:0] pm9_x_init = 32'd160;
+	wire [31:0] pm9_y_init = 32'd210;
+	wire [31:0] pm9_x_final = 32'd64;
+	wire [31:0] pm9_y_final = 32'd158;
+	wire [31:0] pm9_dx = 32'd12;
+	wire [31:0] pm9_dy = 32'd7;
+	reg [31:0] pm9_currX = 32'd160;
+	reg [31:0] pm9_currY = 32'd210;
+	reg pm9_active = 1'b0;
+
+	wire [31:0] pm10_x_init = 32'd160;
+	wire [31:0] pm10_y_init = 32'd210;
+	wire [31:0] pm10_x_final = 32'd128;
+	wire [31:0] pm10_y_final = 32'd158;
+	wire [31:0] pm10_dx = 32'd4;
+	wire [31:0] pm10_dy = 32'd7;
+	reg [31:0] pm10_currX = 32'd160;
+	reg [31:0] pm10_currY = 32'd210;
+	reg pm10_active = 1'b0;
+
+	wire [31:0] pm11_x_init = 32'd160;
+	wire [31:0] pm11_y_init = 32'd210;
+	wire [31:0] pm11_x_final = 32'd192;
+	wire [31:0] pm11_y_final = 32'd158;
+	wire [31:0] pm11_dx = 32'd4;
+	wire [31:0] pm11_dy = 32'd7;
+	reg [31:0] pm11_currX = 32'd160;
+	reg [31:0] pm11_currY = 32'd210;
+	reg pm11_active = 1'b0;
+
+	wire [31:0] pm12_x_init = 32'd160;
+	wire [31:0] pm12_y_init = 32'd210;
+	wire [31:0] pm12_x_final = 32'd256;
+	wire [31:0] pm12_y_final = 32'd158;
+	wire [31:0] pm12_dx = 32'd12;
+	wire [31:0] pm12_dy = 32'd7;
+	reg [31:0] pm12_currX = 32'd160;
+	reg [31:0] pm12_currY = 32'd210;
+	reg pm12_active = 1'b0;
+
 	
 	//missile spawning randomizer
 	//--------------------------------------------------------------------
@@ -805,7 +1024,7 @@ module missile_control(
 			// ---------------------------------------------------------------------
 			EM12_START: 
 			begin
-				NS = CHECK_GAME_OVER;
+				NS = MOVE_PM1;
 			end
 			EM12_CHECK_Y: NS = EM12_DRAW;
 			EM12_UPDATE_Y: NS = EM12_CHECK_Y;
@@ -815,9 +1034,226 @@ module missile_control(
 				if (em12_active == 1'b0 & em12_currY < em12_y_final)
 					NS = EM12_UPDATE_X;
 				else
+					NS = MOVE_PM1;
+			end
+			EM12_END: NS = MOVE_PM1;
+			
+			// Player Missile 1 graphics
+			// ---------------------------------------------------------------------
+			PM1_START: 
+			begin
+				NS = PM2_START;
+			end
+			PM1_CHECK_Y: NS = PM1_DRAW;
+			PM1_UPDATE_Y: NS = PM1_CHECK_Y;
+			PM1_UPDATE_X: NS = PM1_UPDATE_Y;
+			PM1_DRAW: 
+			begin
+				if (pm1_active == 1'b0 & pm1_currY < pm1_y_final)
+					NS = PM1_UPDATE_X;
+				else
+					NS = MOVE_PM2;
+			end
+			PM1_END: NS = MOVE_PM2;
+
+			// Player Missile 2 graphics
+			// ---------------------------------------------------------------------
+			PM2_START: 
+			begin
+				NS = PM3_START;
+			end
+			PM2_CHECK_Y: NS = PM2_DRAW;
+			PM2_UPDATE_Y: NS = PM2_CHECK_Y;
+			PM2_UPDATE_X: NS = PM2_UPDATE_Y;
+			PM2_DRAW: 
+			begin
+				if (pm2_active == 1'b0 & pm2_currY < pm2_y_final)
+					NS = PM2_UPDATE_X;
+				else
+					NS = MOVE_PM3;
+			end
+			PM2_END: NS = MOVE_PM3;
+
+			// Player Missile 3 graphics
+			// ---------------------------------------------------------------------
+			PM3_START: 
+			begin
+				NS = PM3_START;
+			end
+			PM3_CHECK_Y: NS = PM3_DRAW;
+			PM3_UPDATE_Y: NS = PM3_CHECK_Y;
+			PM3_UPDATE_X: NS = PM3_UPDATE_Y;
+			PM3_DRAW: 
+			begin
+				if (pm3_active == 1'b0 & pm3_currY < pm3_y_final)
+					NS = PM3_UPDATE_X;
+				else
+					NS = MOVE_PM4;
+			end
+			PM3_END: NS = MOVE_PM4;
+
+			// Player Missile 4 graphics
+			// ---------------------------------------------------------------------
+			PM4_START: 
+			begin
+				NS = PM5_START;
+			end
+			PM4_CHECK_Y: NS = PM4_DRAW;
+			PM4_UPDATE_Y: NS = PM4_CHECK_Y;
+			PM4_UPDATE_X: NS = PM4_UPDATE_Y;
+			PM4_DRAW: 
+			begin
+				if (pm4_active == 1'b0 & pm4_currY < pm4_y_final)
+					NS = PM4_UPDATE_X;
+				else
+					NS = MOVE_PM5;
+			end
+			PM4_END: NS = MOVE_PM5;
+
+			// Player Missile 5 graphics
+			// ---------------------------------------------------------------------
+			PM5_START: 
+			begin
+				NS = PM6_START;
+			end
+			PM5_CHECK_Y: NS = PM5_DRAW;
+			PM5_UPDATE_Y: NS = PM5_CHECK_Y;
+			PM5_UPDATE_X: NS = PM5_UPDATE_Y;
+			PM5_DRAW: 
+			begin
+				if (pm5_active == 1'b0 & pm5_currY < pm5_y_final)
+					NS = PM5_UPDATE_X;
+				else
+					NS = MOVE_PM6;
+			end
+			PM5_END: NS = MOVE_PM6;
+
+			// Player Missile 6 graphics
+			// ---------------------------------------------------------------------
+			PM6_START: 
+			begin
+				NS = PM7_START;
+			end
+			PM6_CHECK_Y: NS = PM6_DRAW;
+			PM6_UPDATE_Y: NS = PM6_CHECK_Y;
+			PM6_UPDATE_X: NS = PM6_UPDATE_Y;
+			PM6_DRAW: 
+			begin
+				if (pm6_active == 1'b0 & pm6_currY < pm6_y_final)
+					NS = PM6_UPDATE_X;
+				else
+					NS = MOVE_PM7;
+			end
+			PM6_END: NS = MOVE_PM7;
+
+			// Player Missile 7 graphics
+			// ---------------------------------------------------------------------
+			PM7_START: 
+			begin
+				NS = PM8_START;
+			end
+			PM7_CHECK_Y: NS = PM7_DRAW;
+			PM7_UPDATE_Y: NS = PM7_CHECK_Y;
+			PM7_UPDATE_X: NS = PM7_UPDATE_Y;
+			PM7_DRAW: 
+			begin
+				if (pm7_active == 1'b0 & pm7_currY < pm7_y_final)
+					NS = PM7_UPDATE_X;
+				else
+					NS = MOVE_PM8;
+			end
+			PM7_END: NS = MOVE_PM8;
+
+			// Player Missile 8 graphics
+			// ---------------------------------------------------------------------
+			PM8_START: 
+			begin
+				NS = PM9_START;
+			end
+			PM8_CHECK_Y: NS = PM8_DRAW;
+			PM8_UPDATE_Y: NS = PM8_CHECK_Y;
+			PM8_UPDATE_X: NS = PM8_UPDATE_Y;
+			PM8_DRAW: 
+			begin
+				if (pm8_active == 1'b0 & pm8_currY < pm8_y_final)
+					NS = PM8_UPDATE_X;
+				else
+					NS = MOVE_PM9;
+			end
+			PM8_END: NS = MOVE_PM9;
+
+			// Player Missile 9 graphics
+			// ---------------------------------------------------------------------
+			PM9_START: 
+			begin
+				NS = PM10_START;
+			end
+			PM9_CHECK_Y: NS = PM9_DRAW;
+			PM9_UPDATE_Y: NS = PM9_CHECK_Y;
+			PM9_UPDATE_X: NS = PM9_UPDATE_Y;
+			PM9_DRAW: 
+			begin
+				if (pm9_active == 1'b0 & pm9_currY < pm9_y_final)
+					NS = PM9_UPDATE_X;
+				else
+					NS = MOVE_PM10;
+			end
+			PM9_END: NS = MOVE_PM10;
+
+			// Player Missile 10 graphics
+			// ---------------------------------------------------------------------
+			PM10_START: 
+			begin
+				NS = PM11_START;
+			end
+			PM10_CHECK_Y: NS = PM10_DRAW;
+			PM10_UPDATE_Y: NS = PM10_CHECK_Y;
+			PM10_UPDATE_X: NS = PM10_UPDATE_Y;
+			PM10_DRAW: 
+			begin
+				if (pm10_active == 1'b0 & pm10_currY < pm10_y_final)
+					NS = PM10_UPDATE_X;
+				else
+					NS = MOVE_PM11;
+			end
+			PM10_END: NS = MOVE_PM11;
+
+			// Player Missile 11 graphics
+			// ---------------------------------------------------------------------
+			PM11_START: 
+			begin
+				NS = PM12_START;
+			end
+			PM11_CHECK_Y: NS = PM11_DRAW;
+			PM11_UPDATE_Y: NS = PM11_CHECK_Y;
+			PM11_UPDATE_X: NS = PM11_UPDATE_Y;
+			PM11_DRAW: 
+			begin
+				if (pm11_active == 1'b0 & pm11_currY < pm11_y_final)
+					NS = PM11_UPDATE_X;
+				else
+					NS = MOVE_PM12;
+			end
+			PM11_END: NS = MOVE_PM12;
+
+			// Player Missile 12 graphics
+			// ---------------------------------------------------------------------
+			PM12_START: 
+			begin
+				NS = CHECK_GAME_OVER;
+			end
+			PM12_CHECK_Y: NS = PM12_DRAW;
+			PM12_UPDATE_Y: NS = PM12_CHECK_Y;
+			PM12_UPDATE_X: NS = PM12_UPDATE_Y;
+			PM12_DRAW: 
+			begin
+				if (pm12_active == 1'b0 & pm12_currY < pm12_y_final)
+					NS = PM12_UPDATE_X;
+				else
 					NS = CHECK_GAME_OVER;
 			end
-			EM12_END: NS = CHECK_GAME_OVER;
+			PM12_END: NS = CHECK_GAME_OVER;
+
 			
 			
 			// GAME RUNNER
@@ -826,17 +1262,10 @@ module missile_control(
 			
 			MOVE_EM1: 
 			begin
-			
 				if(em1_active == 1)
-				begin
-				NS = EM1_UPDATE_X;
-				end
-				
+					NS = EM1_UPDATE_X;
 				else
-				begin
-				NS = MOVE_EM2;
-				end
-			
+					NS = MOVE_EM2;
 			end
 			MOVE_EM2: 
 			begin
@@ -990,10 +1419,175 @@ module missile_control(
 				
 				else
 				begin
+				NS = MOVE_PM1;
+				end
+			
+			end
+			
+			MOVE_PM1: 
+			begin
+				if(pm1_active == 1)
+					NS = PM1_UPDATE_X;
+				else
+					NS = MOVE_PM2;
+			end
+			MOVE_PM2: 
+			begin
+			
+				if(pm2_active == 1)
+				begin
+				NS = PM2_UPDATE_X;
+				end
+				
+				else
+				begin
+				NS = MOVE_PM3;
+				end
+			
+			end
+			MOVE_PM3:
+			begin
+			
+				if(pm3_active == 1)
+				begin
+				NS = PM3_UPDATE_X;
+				end
+				
+				else
+				begin
+				NS = MOVE_PM4;
+				end
+			
+			end
+			MOVE_PM4:
+			begin
+			
+				if(pm4_active == 1)
+				begin
+				NS = PM4_UPDATE_X;
+				end
+				
+				else
+				begin
+				NS = MOVE_PM5;
+				end
+			
+			end
+			MOVE_PM5:
+			begin
+			
+				if(pm5_active == 1)
+				begin
+				NS = PM5_UPDATE_X;
+				end
+				
+				else
+				begin
+				NS = MOVE_PM6;
+				end
+			
+			end
+			MOVE_PM6:
+			begin
+			
+				if(pm6_active == 1)
+				begin
+				NS = PM6_UPDATE_X;
+				end
+				
+				else
+				begin
+				NS = MOVE_PM7;
+				end
+			
+			end
+			
+			MOVE_PM7:
+			begin
+			
+				if(pm7_active == 1)
+				begin
+				NS = PM7_UPDATE_X;
+				end
+				
+				else
+				begin
+				NS = MOVE_PM8;
+				end
+			
+			end
+			
+			MOVE_PM8:
+			begin
+			
+				if(pm8_active == 1)
+				begin
+				NS = PM8_UPDATE_X;
+				end
+				
+				else
+				begin
+				NS = MOVE_PM9;
+				end
+			
+			end
+			MOVE_PM9:
+			begin
+			
+				if(pm9_active == 1)
+				begin
+				NS = PM9_UPDATE_X;
+				end
+				
+				else
+				begin
+				NS = MOVE_PM10;
+				end
+			
+			end		
+			MOVE_PM10:
+			begin
+			
+				if(pm10_active == 1)
+				begin
+				NS = PM10_UPDATE_X;
+				end
+				
+				else
+				begin
+				NS = MOVE_PM11;
+				end
+			
+			end
+			MOVE_PM11:
+			begin
+			
+				if(pm11_active == 1)
+				begin
+				NS = PM11_UPDATE_X;
+				end
+				
+				else
+				begin
+				NS = MOVE_PM12;
+				end
+			
+			end
+			MOVE_PM12:
+			begin
+			
+				if(pm12_active == 1)
+				begin
+				NS = PM12_UPDATE_X;
+				end
+				
+				else
+				begin
 				NS = CHECK_MISSILES;
 				end
 			
 			end
+
 			
 			CHECK_MISSILES: NS = MISSILE_SPAWN;
 				
@@ -1004,12 +1598,7 @@ module missile_control(
 				if (game_i < 32'd12500000)
 					NS = GAME_WAITING;
 				else
-//				begin
-//					if (game_over == 2'd2)
-//						NS = GAME_OVER_START;
-//					else
 					NS = CHECK_GAME_OVER;
-//				end
 			end
 			GAME_WAITING: NS = GAME_WAIT;
 			
