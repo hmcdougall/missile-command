@@ -2930,79 +2930,14 @@ end
 								pm1_active = 0;
 							end
 					end
-					//POS	2
-			//-------------------------------------------------------------------------------
-			PLAYER_CONTROL_2:
-			begin
-						if(player_2_reg == 0)
-							begin
-								color <= player_missile_color;
-								x = 64;
-								y = 105;
-								if(FIRE == 1)
-								pm2_active = 1;
-							end
-						else
-							begin
-							color <= back_color;
-								x = 64;
-								y = 105;
-								pm2_active = 0;
-							end
-					end
-					//POS	3
-			//-------------------------------------------------------------------------------
-			PLAYER_CONTROL_3:
-			begin
-					
-						if(player_3_reg == 0)
-							begin
-								color <= player_missile_color;
-								x = 64;
-								y = 158;
-								if(FIRE == 1)
-								pm3_active = 1;
-							end
-						else
-							begin
-							color <= back_color;
-								x = 64;
-								y = 158;
-								pm3_active = 0;
-							end
-					end
-					
-					
-					//POS	4
-			//-------------------------------------------------------------------------------
-			PLAYER_CONTROL_4:
-			begin
-					
-						if(player_4_reg == 0)
-							begin
-								color <= player_missile_color;
-								x = 128;
-								y = 53;
-								if(FIRE == 1)
-								pm4_active = 1;
-							end
-						else
-							begin
-								color <= back_color;
-								x = 128;
-								y = 53;
-								pm4_active = 0;
-							end
-					end
-					
 					//POS	5
 			//-------------------------------------------------------------------------------
-			PLAYER_CONTROL_5:
+			PLAYER_CONTROL_2:
 			begin
 						if(player_5_reg == 0)
 							begin
 								color <= player_missile_color;
-								x = 128;
+								x = 64;
 								y = 105;
 								if(FIRE == 1)
 								pm5_active = 1;
@@ -3010,79 +2945,20 @@ end
 						else
 							begin
 							color <= back_color;
-								x = 128;
+								x = 64;
 								y = 105;
 								pm5_active = 0;
 							end
 					end
-					//POS	6
-			//-------------------------------------------------------------------------------
-			PLAYER_CONTROL_6:
-			begin
-						if(player_6_reg == 0)
-							begin
-								color <= player_missile_color;
-								x = 128;
-								y = 158;
-								if(FIRE == 1)
-								pm6_active = 1;
-							end
-						else
-							begin
-								color <= back_color;
-								x = 128;
-								y = 158;
-								pm6_active = 0;
-							end
-				end
-				//POS	7
-			//-------------------------------------------------------------------------------
-			PLAYER_CONTROL_7:
-			begin
-						if(player_7_reg == 0)
-							begin
-								color <= player_missile_color;
-								x = 192;
-								y = 53;
-								if(FIRE == 1)
-								pm7_active = 1;
-							end
-						else
-							begin
-							color <= back_color;
-								x = 192;
-								y = 53;
-								pm7_active = 0;
-							end
-				end
-				//POS	8
-			//-------------------------------------------------------------------------------
-		PLAYER_CONTROL_8:
-		begin	
-						if(player_8_reg == 0)
-							begin
-								color <= player_missile_color;
-								x = 192;
-								y = 105;
-								if(FIRE == 1)
-								pm8_active = 1;
-							end
-						else
-							begin
-							color <= back_color;
-								x = 192;
-								y = 105;
-								pm8_active = 0;
-							end
-				end
 					//POS	9
-			//-------------------------------------------------------------------------------	
-			PLAYER_CONTROL_9:
+			//-------------------------------------------------------------------------------
+			PLAYER_CONTROL_3:
 			begin
+					
 						if(player_9_reg == 0)
 							begin
 								color <= player_missile_color;
-								x = 192;
+								x = 64;
 								y = 158;
 								if(FIRE == 1)
 								pm9_active = 1;
@@ -3090,51 +2966,175 @@ end
 						else
 							begin
 							color <= back_color;
-								x = 192;
+								x = 64;
 								y = 158;
 								pm9_active = 0;
 							end
-			end
-				//POS	10
+					end
+					
+					
+					//POS	2
 			//-------------------------------------------------------------------------------
-			PLAYER_CONTROL_10:
+			PLAYER_CONTROL_4:
 			begin
 					
+						if(player_2_reg == 0)
+							begin
+								color <= player_missile_color;
+								x = 128;
+								y = 53;
+								if(FIRE == 1)
+								pm2_active = 1;
+							end
+						else
+							begin
+								color <= back_color;
+								x = 128;
+								y = 53;
+								pm2_active = 0;
+							end
+					end
+					
+					//POS	6
+			//-------------------------------------------------------------------------------
+			PLAYER_CONTROL_5:
+			begin
+						if(player_6_reg == 0)
+							begin
+								color <= player_missile_color;
+								x = 128;
+								y = 105;
+								if(FIRE == 1)
+								pm6_active = 1;
+							end
+						else
+							begin
+							color <= back_color;
+								x = 128;
+								y = 105;
+								pm6_active = 0;
+							end
+					end
+					//POS	10
+			//-------------------------------------------------------------------------------
+			PLAYER_CONTROL_6:
+			begin
 						if(player_10_reg == 0)
 							begin
 								color <= player_missile_color;
-								x = 256;
-								y = 53;
+								x = 128;
+								y = 158;
 								if(FIRE == 1)
 								pm10_active = 1;
 							end
 						else
 							begin
-							color <= back_color;
-								x = 256;
-								y = 53;
+								color <= back_color;
+								x = 128;
+								y = 158;
 								pm10_active = 0;
 							end
-			end
-					//POS	 11
+				end
+				//POS	3
 			//-------------------------------------------------------------------------------
-			PLAYER_CONTROL_11:
+			PLAYER_CONTROL_7:
 			begin
-					
+						if(player_3_reg == 0)
+							begin
+								color <= player_missile_color;
+								x = 192;
+								y = 53;
+								if(FIRE == 1)
+								pm3_active = 1;
+							end
+						else
+							begin
+							color <= back_color;
+								x = 192;
+								y = 53;
+								pm3_active = 0;
+							end
+				end
+				//POS	7
+			//-------------------------------------------------------------------------------
+		PLAYER_CONTROL_8:
+		begin	
+						if(player_7_reg == 0)
+							begin
+								color <= player_missile_color;
+								x = 192;
+								y = 105;
+								if(FIRE == 1)
+								pm7_active = 1;
+							end
+						else
+							begin
+							color <= back_color;
+								x = 192;
+								y = 105;
+								pm7_active = 0;
+							end
+				end
+					//POS	11
+			//-------------------------------------------------------------------------------	
+			PLAYER_CONTROL_9:
+			begin
 						if(player_11_reg == 0)
 							begin
 								color <= player_missile_color;
-								x = 256;
-								y = 105;
+								x = 192;
+								y = 158;
 								if(FIRE == 1)
 								pm11_active = 1;
 							end
 						else
 							begin
 							color <= back_color;
+								x = 192;
+								y = 158;
+								pm11_active = 0;
+							end
+			end
+				//POS	4
+			//-------------------------------------------------------------------------------
+			PLAYER_CONTROL_10:
+			begin
+					
+						if(player_4_reg == 0)
+							begin
+								color <= player_missile_color;
+								x = 256;
+								y = 53;
+								if(FIRE == 1)
+								pm4_active = 1;
+							end
+						else
+							begin
+							color <= back_color;
+								x = 256;
+								y = 53;
+								pm4_active = 0;
+							end
+			end
+					//POS	 8
+			//-------------------------------------------------------------------------------
+			PLAYER_CONTROL_11:
+			begin
+					
+						if(player_8_reg == 0)
+							begin
+								color <= player_missile_color;
 								x = 256;
 								y = 105;
-								pm11_active = 0;
+								if(FIRE == 1)
+								pm8_active = 1;
+							end
+						else
+							begin
+							color <= back_color;
+								x = 256;
+								y = 105;
+								pm8_active = 0;
 								
 							end
 			end		
