@@ -191,25 +191,6 @@ module missile_control(
 		EM12_DRAW = 8'd106,
 		EM12_END = 8'd107,
 		
-		GAME_RUNNER = 8'd108,
-		MOVE_EM1 = 8'd109,
-		MOVE_EM2 = 8'd110,
-		MOVE_EM3 = 8'd111,
-		MOVE_EM4 = 8'd112,
-		MOVE_EM5 = 8'd113,
-		MOVE_EM6 = 8'd114,
-		MOVE_EM7 = 8'd115,
-		MOVE_EM8 = 8'd116,
-		MOVE_EM9 = 8'd117,
-		MOVE_EM10 = 8'd118,
-		MOVE_EM11 = 8'd119,
-		MOVE_EM12 = 8'd120,
-		CHECK_MISSILES = 8'd121,
-		GAME_WAIT = 8'd122,
-		GAME_WAITING = 8'd123,
-		MISSILE_SPAWN = 8'd124,
-		CHECK_GAME_OVER = 8'd125,
-		
 		PM1_START = 8'd127,
 		PM1_CHECK_Y = 8'd128,
 		PM1_UPDATE_Y = 8'd129,
@@ -306,6 +287,26 @@ module missile_control(
 		MOVE_PM10 = 8'd208,
 		MOVE_PM11 = 8'd209,
 		MOVE_PM12 = 8'd210,
+		
+		GAME_RUNNER = 8'd108,
+		MOVE_EM1 = 8'd109,
+		MOVE_EM2 = 8'd110,
+		MOVE_EM3 = 8'd111,
+		MOVE_EM4 = 8'd112,
+		MOVE_EM5 = 8'd113,
+		MOVE_EM6 = 8'd114,
+		MOVE_EM7 = 8'd115,
+		MOVE_EM8 = 8'd116,
+		MOVE_EM9 = 8'd117,
+		MOVE_EM10 = 8'd118,
+		MOVE_EM11 = 8'd119,
+		MOVE_EM12 = 8'd120,
+		CHECK_MISSILES = 8'd121,
+		GAME_WAIT = 8'd122,
+		GAME_WAITING = 8'd123,
+		MISSILE_SPAWN = 8'd124,
+		CHECK_GAME_OVER = 8'd125,
+		CHECK_STATUS = 8'd212,
 		
 		GAME_OVER_START = 8'd247,
 		GAME_OVER_CHECK_Y = 8'd248,
@@ -469,8 +470,8 @@ module missile_control(
 	wire [31:0] pm1_y_init = 32'd210;
 	wire [31:0] pm1_x_final = 32'd64;
 	wire [31:0] pm1_y_final = 32'd53;
-	wire [31:0] pm1_dx = 32'd6;
-	wire [31:0] pm1_dy = 32'd12;
+	wire [31:0] pm1_dx = 32'd4;
+	wire [31:0] pm1_dy = 32'd7;
 	reg [31:0] pm1_currX = 32'd160;
 	reg [31:0] pm1_currY = 32'd210;
 	reg pm1_active = 1'b1;
@@ -479,8 +480,8 @@ module missile_control(
 	wire [31:0] pm2_y_init = 32'd210;
 	wire [31:0] pm2_x_final = 32'd128;
 	wire [31:0] pm2_y_final = 32'd53;
-	wire [31:0] pm2_dx = 32'd4;
-	wire [31:0] pm2_dy = 32'd6;
+	wire [31:0] pm2_dx = 32'd2;
+	wire [31:0] pm2_dy = 32'd10;
 	reg [31:0] pm2_currX = 32'd160;
 	reg [31:0] pm2_currY = 32'd210;
 	reg pm2_active = 1'b1;
@@ -489,8 +490,8 @@ module missile_control(
 	wire [31:0] pm3_y_init = 32'd210;
 	wire [31:0] pm3_x_final = 32'd192;
 	wire [31:0] pm3_y_final = 32'd53;
-	wire [31:0] pm3_dx = 32'd4;
-	wire [31:0] pm3_dy = 32'd6;
+	wire [31:0] pm3_dx = 32'd2;
+	wire [31:0] pm3_dy = 32'd10;
 	reg [31:0] pm3_currX = 32'd160;
 	reg [31:0] pm3_currY = 32'd210;
 	reg pm3_active = 1'b1;
@@ -499,8 +500,8 @@ module missile_control(
 	wire [31:0] pm4_y_init = 32'd210;
 	wire [31:0] pm4_x_final = 32'd256;
 	wire [31:0] pm4_y_final = 32'd53;
-	wire [31:0] pm4_dx = 32'd6;
-	wire [31:0] pm4_dy = 32'd12;
+	wire [31:0] pm4_dx = 32'd4;
+	wire [31:0] pm4_dy = 32'd7 ;
 	reg [31:0] pm4_currX = 32'd160;
 	reg [31:0] pm4_currY = 32'd210;
 	reg pm4_active = 1'b1;
@@ -509,8 +510,8 @@ module missile_control(
 	wire [31:0] pm5_y_init = 32'd210;
 	wire [31:0] pm5_x_final = 32'd64;
 	wire [31:0] pm5_y_final = 32'd105;
-	wire [31:0] pm5_dx = 32'd7;
-	wire [31:0] pm5_dy = 32'd12;
+	wire [31:0] pm5_dx = 32'd5;
+	wire [31:0] pm5_dy = 32'd6;
 	reg [31:0] pm5_currX = 32'd160;
 	reg [31:0] pm5_currY = 32'd210;
 	reg pm5_active = 1'b1;
@@ -520,7 +521,7 @@ module missile_control(
 	wire [31:0] pm6_x_final = 32'd128;
 	wire [31:0] pm6_y_final = 32'd105;
 	wire [31:0] pm6_dx = 32'd4;
-	wire [31:0] pm6_dy = 32'd7;
+	wire [31:0] pm6_dy = 32'd13;
 	reg [31:0] pm6_currX = 32'd160;
 	reg [31:0] pm6_currY = 32'd210;
 	reg pm6_active = 1'b1;
@@ -530,7 +531,7 @@ module missile_control(
 	wire [31:0] pm7_x_final = 32'd192;
 	wire [31:0] pm7_y_final = 32'd105;
 	wire [31:0] pm7_dx = 32'd4;
-	wire [31:0] pm7_dy = 32'd7;
+	wire [31:0] pm7_dy = 32'd13;
 	reg [31:0] pm7_currX = 32'd160;
 	reg [31:0] pm7_currY = 32'd210;
 	reg pm7_active = 1'b1;
@@ -539,8 +540,8 @@ module missile_control(
 	wire [31:0] pm8_y_init = 32'd210;
 	wire [31:0] pm8_x_final = 32'd256;
 	wire [31:0] pm8_y_final = 32'd105;
-	wire [31:0] pm8_dx = 32'd7;
-	wire [31:0] pm8_dy = 32'd12;
+	wire [31:0] pm8_dx = 32'd5;
+	wire [31:0] pm8_dy = 32'd6;
 	reg [31:0] pm8_currX = 32'd160;
 	reg [31:0] pm8_currY = 32'd210;
 	reg pm8_active = 1'b1;
@@ -549,8 +550,8 @@ module missile_control(
 	wire [31:0] pm9_y_init = 32'd210;
 	wire [31:0] pm9_x_final = 32'd64;
 	wire [31:0] pm9_y_final = 32'd158;
-	wire [31:0] pm9_dx = 32'd7;
-	wire [31:0] pm9_dy = 32'd12;
+	wire [31:0] pm9_dx = 32'd10;
+	wire [31:0] pm9_dy = 32'd5;
 	reg [31:0] pm9_currX = 32'd160;
 	reg [31:0] pm9_currY = 32'd210;
 	reg pm9_active = 1'b1;
@@ -559,8 +560,8 @@ module missile_control(
 	wire [31:0] pm10_y_init = 32'd210;
 	wire [31:0] pm10_x_final = 32'd128;
 	wire [31:0] pm10_y_final = 32'd158;
-	wire [31:0] pm10_dx = 32'd4;
-	wire [31:0] pm10_dy = 32'd7;
+	wire [31:0] pm10_dx = 32'd13;
+	wire [31:0] pm10_dy = 32'd8;
 	reg [31:0] pm10_currX = 32'd160;
 	reg [31:0] pm10_currY = 32'd210;
 	reg pm10_active = 1'b1;
@@ -569,8 +570,8 @@ module missile_control(
 	wire [31:0] pm11_y_init = 32'd210;
 	wire [31:0] pm11_x_final = 32'd192;
 	wire [31:0] pm11_y_final = 32'd158;
-	wire [31:0] pm11_dx = 32'd4;
-	wire [31:0] pm11_dy = 32'd7;
+	wire [31:0] pm11_dx = 32'd13;
+	wire [31:0] pm11_dy = 32'd8;
 	reg [31:0] pm11_currX = 32'd160;
 	reg [31:0] pm11_currY = 32'd210;
 	reg pm11_active = 1'b1;
@@ -579,8 +580,8 @@ module missile_control(
 	wire [31:0] pm12_y_init = 32'd210;
 	wire [31:0] pm12_x_final = 32'd256;
 	wire [31:0] pm12_y_final = 32'd158;
-	wire [31:0] pm12_dx = 32'd7;
-	wire [31:0] pm12_dy = 32'd12;
+	wire [31:0] pm12_dx = 32'd10;
+	wire [31:0] pm12_dy = 32'd5;
 	reg [31:0] pm12_currX = 32'd160;
 	reg [31:0] pm12_currY = 32'd210;
 	reg pm12_active = 1'b1;
@@ -1243,7 +1244,7 @@ module missile_control(
 			// ---------------------------------------------------------------------
 			PM12_START: 
 			begin
-				NS = CHECK_GAME_OVER;
+				NS = CHECK_STATUS;
 			end
 			PM12_CHECK_Y: NS = PM12_DRAW;
 			PM12_UPDATE_Y: NS = PM12_CHECK_Y;
@@ -1253,9 +1254,9 @@ module missile_control(
 				if (pm12_active == 1'b0 & pm12_currY < pm12_y_final)
 					NS = PM12_UPDATE_X;
 				else
-					NS = CHECK_GAME_OVER;
+					NS = CHECK_STATUS;
 			end
-			PM12_END: NS = CHECK_GAME_OVER;
+			PM12_END: NS = CHECK_STATUS;
 
 			
 			
@@ -1522,16 +1523,16 @@ module missile_control(
 			
 			MOVE_PM8:
 			begin
-			
-				if(pm8_active == 1)
-				begin
+//			
+//				if(pm8_active == 1)
+//				begin
 				NS = PM8_UPDATE_X;
-				end
-				
-				else
-				begin
-				NS = MOVE_PM9;
-				end
+//				end
+//				
+//				else
+//				begin
+//				NS = MOVE_PM9;
+//				end
 			
 			end
 			MOVE_PM9:
@@ -1564,34 +1565,34 @@ module missile_control(
 			end
 			MOVE_PM11:
 			begin
-			
-				if(pm11_active == 1)
-				begin
+//			
+//				if(pm11_active == 1)
+//				begin
 				NS = PM11_UPDATE_X;
-				end
-				
-				else
-				begin
-				NS = MOVE_PM12;
-				end
+//				end
+//				
+//				else
+//				begin
+//				NS = MOVE_PM12;
+//				end
 			
 			end
 			MOVE_PM12:
 			begin
 			
-				if(pm12_active == 1)
-				begin
+//				if(pm12_active == 1)
+//				begin
 				NS = PM12_UPDATE_X;
-				end
-				
-				else
-				begin
-				NS = CHECK_MISSILES;
-				end
+//				end
+//				
+//				else
+//				begin
+//				NS = CHECK_STATUS;
+//				end
 			
 			end
 
-			
+			CHECK_STATUS: NS = CHECK_MISSILES;
 			CHECK_MISSILES: NS = MISSILE_SPAWN;
 				
 			
@@ -2575,22 +2576,17 @@ module missile_control(
 				end
 
 				
-				
-				
-				MISSILE_SPAWN:
-			begin
-				
-					//Missile Spawning
+				//Missile Spawning
 					//====================================================================
-					
-					
+				MISSILE_SPAWN:
+				begin
 					//missile spawn 1
 					if(( missile_1_hot_reg == 1) & (missile_1_target_reg == 0))
 						begin
 							em1_active <= 1'b1;
 							color <= enemy_missile_color;
-					x <= 30;
-					y <= 30;
+						x <= 30;
+						y <= 30;
 						end
 					else
 						begin
@@ -2717,19 +2713,13 @@ module missile_control(
 				game_i <= game_i + 32'd1;
 			end
 			
-			CHECK_GAME_OVER:
+			CHECK_STATUS:
 			begin
 				if (em1_currY - city1_y_init < 5 | em2_currY - city1_y_init < 5 | em3_currY - city1_y_init < 5 | em4_currY - city1_y_init < 5)
 					city1_status <= 1'b0;
 		
-//				if (em5_currY - 32'd210 < 5)
-//					missile_launcher_status <= 1'b0;
-//				if (em6_currY - 32'd210 < 5)
-//					missile_launcher_status <= 1'b0;
-//				if (em7_currY - 32'd210 < 5)
-//					missile_launcher_status <= 1'b0;
-//				if (em8_currY - 32'd210 < 5)
-//					missile_launcher_status <= 1'b0;
+				if (em5_currY - 32'd210 < 5 | em6_currY - 32'd210 < 5 | em7_currY - 32'd210 < 5 | em8_currY - 32'd210 < 5)
+					missile_launcher_status <= 1'b0;
 				
 				if (em9_currY - city2_y_init < 5 | em10_currY - city2_y_init < 5 | em11_currY - city2_y_init < 5 | em12_currY - city2_y_init < 5)
 				begin
@@ -2738,6 +2728,11 @@ module missile_control(
 					x <= 32'd10;
 					y <= 32'd10;
 				end
+			end
+			
+			CHECK_GAME_OVER:
+			begin
+				
 			end
 			
 			// game over
