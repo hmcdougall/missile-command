@@ -42,7 +42,7 @@ set_global_assignment -name DEVICE EP4CE115F29C7
 set_global_assignment -name TOP_LEVEL_ENTITY missile_control
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 16.1.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "20:45:22  DECEMBER 10, 2023"
-set_global_assignment -name LAST_QUARTUS_VERSION "19.1.0 Lite Edition"
+set_global_assignment -name LAST_QUARTUS_VERSION "16.1.0 Lite Edition"
 set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
 set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
 set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
@@ -51,15 +51,9 @@ set_global_assignment -name NOMINAL_CORE_SUPPLY_VOLTAGE 1.2V
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
-set_global_assignment -name VERILOG_FILE VGA/vga_pll.v
-set_global_assignment -name QIP_FILE VGA/vga_pll.qip
-set_global_assignment -name VERILOG_FILE VGA/vga_controller.v
-set_global_assignment -name VERILOG_FILE VGA/vga_address_translator.v
-set_global_assignment -name VERILOG_FILE VGA/vga_adapter.v
-set_global_assignment -name VERILOG_FILE missile_control.v
 set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
-set_location_assignment PIN_M23 -to rst
+set_location_assignment PIN_Y23 -to rst
 set_location_assignment PIN_Y2 -to clk
 set_location_assignment PIN_E21 -to done
 set_location_assignment PIN_F11 -to VGA_BLANK
@@ -72,6 +66,34 @@ set_location_assignment PIN_C10 -to VGA_SYNC
 set_location_assignment PIN_C13 -to VGA_VS
 set_location_assignment PIN_G19 -to grid_A1[0]
 set_location_assignment PIN_F19 -to grid_A1[1]
+set_location_assignment PIN_R24 -to player_x_up
+set_location_assignment PIN_N21 -to player_x_down
+set_location_assignment PIN_M21 -to player_y_up
+set_location_assignment PIN_M23 -to player_y_down
+set_global_assignment -name VERILOG_FILE CURSOR.v
+set_global_assignment -name VERILOG_FILE "keyboard(1).v"
+set_global_assignment -name VERILOG_FILE enemy_missile_targeting_reg_4.v
+set_global_assignment -name VERILOG_FILE enemy_missile_targeting_reg_3.v
+set_global_assignment -name VERILOG_FILE enemy_missile_targeting_reg_2.v
+set_global_assignment -name VERILOG_FILE enemy_missile_targeting_reg_1.v
+set_global_assignment -name VERILOG_FILE enemy_missile_shift_reg_2.v
+set_global_assignment -name VERILOG_FILE enemy_missile_shift_reg_1.v
+set_global_assignment -name VERILOG_FILE "enemy_missile_shift_reg _4.v"
+set_global_assignment -name VERILOG_FILE "enemy_missile_shift_reg _3.v"
+set_global_assignment -name VERILOG_FILE city.v
+set_global_assignment -name VERILOG_FILE VGA/vga_pll.v
+set_global_assignment -name QIP_FILE VGA/vga_pll.qip
+set_global_assignment -name VERILOG_FILE VGA/vga_controller.v
+set_global_assignment -name VERILOG_FILE VGA/vga_address_translator.v
+set_global_assignment -name VERILOG_FILE VGA/vga_adapter.v
+set_global_assignment -name VERILOG_FILE missile_control.v
 set_global_assignment -name VERILOG_FILE ps2Keyboard.v
 set_global_assignment -name VERILOG_FILE mouse_Inner_controller.v
+set_location_assignment PIN_AB28 -to player_x_1
+set_location_assignment PIN_AC28 -to player_x_2
+set_location_assignment PIN_AC27 -to player_x_3
+set_location_assignment PIN_AB27 -to player_y_1
+set_location_assignment PIN_AC26 -to player_y_2
+set_location_assignment PIN_AD26 -to player_y_3
+set_location_assignment PIN_AD27 -to player_x_4
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

@@ -1,0 +1,40 @@
+module CURSOR(
+input clk, 
+input rst,
+input player_x_up,
+input player_x_down,
+input player_y_up,
+input player_y_down,
+output reg [3:0]player_cursor_x_reg,
+output reg [3:0]player_cursor_y_reg
+);
+
+
+reg player_cursor_x_reg = 0;
+reg player_cursor_y_reg = 0;
+
+
+always@(posedge clk)
+begin
+
+if((player_x_up == ~1) & (player_cursor_x_reg < 12)
+begin
+player_cursor_x_reg <= player_cursor_x_reg +1;
+end
+
+if((player_x_down == ~1) & (player_cursor_x_reg > 0))
+begin
+player_cursor_x_reg <= player_cursor_x_reg -1;
+end
+
+if((player_y_up == ~1) & (player_cursor_y_reg < 12)
+begin
+player_cursor_y_reg <= player_cursor_y_reg +1;
+end
+
+if((player_y_down == ~1) & (player_cursor_y_reg > 0))
+begin
+player_cursor_y_reg <= player_cursor_y_reg -1;
+end
+
+end
