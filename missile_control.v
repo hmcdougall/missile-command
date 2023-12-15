@@ -4,20 +4,24 @@ module missile_control(
 	input clk, 
 	input rst,
 	
-	//player controls
+	//player controls buttons
 	input player_x_up,
 	input player_x_down,
 	input player_y_up,
 	input player_y_down,
 	//player control switches
-	input player_x_1,
-	input player_x_2,
-	input player_x_3,
-	input player_x_4,
-	
-	input player_y_1,
-	input player_y_2,
-	input player_y_3,
+	input player_1,
+	input player_2,
+	input player_3,
+	input player_4,
+	input player_5,
+	input player_6,
+	input player_7,
+	input player_8,
+	input player_9,
+	input player_10,
+	input player_11,
+	input player_12,
 	
 		
 	// VGA outputs
@@ -324,8 +328,21 @@ module missile_control(
 		MOVE_PM11 = 8'd209,
 		MOVE_PM12 = 8'd210,
 		
-		PLAYER_CURSOR_CONTROL = 8'd211,
+		//player control postions
+		PLAYER_CONTROL_1 = 8'd211,
+		PLAYER_CONTROL_2 = 8'd215,
+		PLAYER_CONTROL_3 = 8'd216,
+		PLAYER_CONTROL_4 = 8'd217,
+		PLAYER_CONTROL_5 = 8'd218,
+		PLAYER_CONTROL_6 = 8'd219,
+		PLAYER_CONTROL_7 = 8'd220,
+		PLAYER_CONTROL_8 = 8'd221,
+		PLAYER_CONTROL_9 = 8'd222,
+		PLAYER_CONTROL_10 = 8'd223,
+		PLAYER_CONTROL_11 = 8'd224,
+		PLAYER_CONTROL_12 = 8'd225,
 		
+		//player fire controls
 		PLAYER_FIRE_CONTROL = 8'd213,
 		
 		GAME_OVER_START = 8'd247,
@@ -345,6 +362,37 @@ module missile_control(
 
 	//player control modules
 	//--------------------------------------------------------------------
+reg player_1_reg;
+reg player_2_reg;
+reg player_3_reg;
+reg player_4_reg;
+reg player_5_reg;
+reg player_6_reg;
+reg player_7_reg;
+reg player_8_reg;
+reg player_9_reg;
+reg player_10_reg;
+reg player_11_reg;
+reg player_12_reg;
+
+always@(*)
+begin
+player_1_reg = player_1;
+player_2_reg = player_2;
+player_3_reg = player_3; 
+player_4_reg = player_4;
+player_5_reg = player_5;
+player_6_reg = player_6;
+player_7_reg = player_7;
+player_8_reg = player_8;
+player_9_reg = player_9;
+player_10_reg = player_10;
+player_11_reg = player_11;
+player_12_reg = player_12;
+
+
+end
+
 	reg [2:0]player_cursor_x_reg;
 	reg [2:0]player_cursor_y_reg;
 	wire [2:0]wire_cursor_x;
@@ -367,14 +415,14 @@ module missile_control(
 	player_cursor_y_reg = wire_cursor_y;
 	
 	
-	player_x_1_reg = player_x_1;
-	player_x_2_reg = player_x_2;
-	player_x_3_reg = player_x_3;
-	player_x_4_reg = player_x_4;
-	
-	player_y_1_reg = player_y_1;
-	player_y_2_reg = player_y_2;
-	player_y_3_reg = player_y_3;
+//	player_x_1_reg = player_x_1;
+//	player_x_2_reg = player_x_2;
+//	player_x_3_reg = player_x_3;
+//	player_x_4_reg = player_x_4;
+//	
+//	player_y_1_reg = player_y_1;
+//	player_y_2_reg = player_y_2;
+//	player_y_3_reg = player_y_3;
 	end
 	// City variables
 	// -------------------------------------------------------------------
@@ -1646,8 +1694,20 @@ module missile_control(
 			end
 
 			
-			CHECK_MISSILES: NS = PLAYER_CURSOR_CONTROL;
-			PLAYER_CURSOR_CONTROL: NS = PLAYER_FIRE_CONTROL;
+			CHECK_MISSILES: NS = PLAYER_CONTROL_1;
+			PLAYER_CONTROL_1: NS = PLAYER_CONTROL_2;
+			PLAYER_CONTROL_2: NS = PLAYER_CONTROL_3;
+			PLAYER_CONTROL_3: NS = PLAYER_CONTROL_4;
+			PLAYER_CONTROL_4: NS = PLAYER_CONTROL_5;
+			PLAYER_CONTROL_5: NS = PLAYER_CONTROL_6;
+			PLAYER_CONTROL_6: NS = PLAYER_CONTROL_7;
+			PLAYER_CONTROL_7: NS = PLAYER_CONTROL_8;
+			PLAYER_CONTROL_8: NS = PLAYER_CONTROL_9;
+			PLAYER_CONTROL_9: NS = PLAYER_CONTROL_10;
+			PLAYER_CONTROL_10: NS = PLAYER_CONTROL_11;
+			PLAYER_CONTROL_11: NS = PLAYER_CONTROL_12;
+			PLAYER_CONTROL_12: NS = PLAYER_FIRE_CONTROL;
+		
 			
 			PLAYER_FIRE_CONTROL: NS = MISSILE_SPAWN;
 			
@@ -2630,182 +2690,10 @@ module missile_control(
 					end
 				end
 
-				//Player controls
-				//==========================================================================
 				
-				//cursor position
-				//------------------------------------------------------------------------------
-				PLAYER_CURSOR_CONTROL:
-					begin
-			
-//		//Col 1	X= 0
-//			//-------------------------------------------------------------------------------
-//					if( (player_x_1_reg == 1) & (player_y_1_reg == 1))
-//						begin
-//							color <= player_missile_color;
-//							x = 64;
-//							y = 53;
-//						end
-//					else
-//						begin
-//						color <= back_color;
-//							x = 64;
-//							y = 53;
-//						end
-//					
-//					
-//					if( (player_x_1_reg == 1) & (player_y_2_reg == 1))
-//						begin
-//							color <= player_missile_color;
-//							x = 64;
-//							y = 105;
-//						end
-//					else
-//						begin
-//						color <= back_color;
-//							x = 64;
-//							y = 105;
-//						end
-//						
-//						
-//					if( (player_x_1_reg == 1) & (player_y_3_reg == 1))
-//						begin
-//							color <= player_missile_color;
-//							x = 64;
-//							y = 158;
-//						end
-//					else
-//						begin
-//						color <= back_color;
-//							x = 64;
-//							y = 158;
-//						end
-//					//Col 2 X =1
-//					//--------------------------------------------------------------------
-//					
-//					if( (player_x_2_reg == 1) & (player_y_1_reg == 1))
-//						begin
-//							color <= player_missile_color;
-//							x = 128;
-//							y = 53;
-//						end
-//					else
-//						begin
-//							color <= back_color;
-//							x = 128;
-//							y = 53;
-//						end
-//						
-//						
-//					if( (player_x_2_reg == 1) & (player_y_2_reg == 1))
-//						begin
-//							color <= player_missile_color;
-//							x = 128;
-//							y = 105;
-//						end
-//					else
-//						begin
-//						color <= back_color;
-//							x = 128;
-//							y = 105;
-//						end
-//						
-//					if( (player_x_2_reg == 1) & (player_y_3_reg == 1))
-//						begin
-//							color <= player_missile_color;
-//							x = 128;
-//							y = 158;
-//						end
-//					else
-//						begin
-//							color <= back_color;
-//							x = 128;
-//							y = 158;
-//						end
-//						
-//				//Col 3  X=2
-//				//--------------------------------------------------------------------------
-//					if( (player_x_3_reg == 1) & (player_y_1_reg == 1))
-//						begin
-//							color <= player_missile_color;
-//							x = 192;
-//							y = 53;
-//						end
-//					else
-//						begin
-//						color <= back_color;
-//							x = 192;
-//							y = 53;
-//						end
-//						
-//					if( (player_x_3_reg == 1) & (player_y_2_reg == 1))
-//						begin
-//							color <= player_missile_color;
-//							x = 192;
-//							y = 105;
-//						end
-//					else
-//						begin
-//						color <= back_color;
-//							x = 192;
-//							y = 105;
-//						end
-//					
-//					if( (player_x_3_reg == 1) & (player_y_3_reg == 1))
-//						begin
-//							color <= player_missile_color;
-//							x = 192;
-//							y = 158;
-//						end
-//					else
-//						begin
-//						color <= back_color;
-//							x = 192;
-//							y = 158;
-//						end
-//				//Col 4	X=3
-//				//----------------------------------------------------------------------------
-//					if( (player_x_4_reg == 1) & (player_y_1_reg == 1))
-//						begin
-//							color <= player_missile_color;
-//							x = 256;
-//							y = 53;
-//						end
-//					else
-//						begin
-//						color <= back_color;
-//							x = 256;
-//							y = 53;
-//						end
-//						
-//					if( (player_x_4_reg == 1) & (player_y_2_reg == 1))
-//						begin
-//							color <= player_missile_color;
-//							x = 256;
-//							y = 105;
-//						end
-//					else
-//						begin
-//						color <= back_color;
-//							x = 256;
-//							y = 105;
-//						end
-//					
-//					if( (player_x_4_reg == 1) & (player_y_3_reg == 1))
-//						begin
-//							color <= player_missile_color;
-//							x = 256;
-//							y = 158;
-//						end
-//					else
-//						begin
-//						color <= back_color;
-//							x = 256;
-//							y = 158;
-//						end	
-			//Col 1	x= 0
+//POS	1
 			//-------------------------------------------------------------------------------
-				PLAYER_CURSOR_CONTROL_1:
+				PLAYER_CONTROL_1:
 					begin
 					
 						if( (player_cursor_x_reg == 0) &  (player_cursor_y_reg == 0))
@@ -2821,83 +2709,315 @@ module missile_control(
 								y = 53;
 							end
 					end
+					//POS	2
+			//-------------------------------------------------------------------------------
+			PLAYER_CONTROL_2:
+			begin
+						if( (player_cursor_x_reg == 0) &  (player_cursor_y_reg == 1))
+							begin
+								color <= player_missile_color;
+								x = 64;
+								y = 105;
+							end
+						else
+							begin
+							color <= back_color;
+								x = 64;
+								y = 105;
+							end
+					end
+					//POS	3
+			//-------------------------------------------------------------------------------
+			PLAYER_CONTROL_3:
+			begin
 					
-//						if( (player_cursor_x_reg == 0) &  (player_cursor_y_reg == 1))
+						if( (player_cursor_x_reg == 0) &  (player_cursor_y_reg == 2))
+							begin
+								color <= player_missile_color;
+								x = 64;
+								y = 158;
+							end
+						else
+							begin
+							color <= back_color;
+								x = 64;
+								y = 158;
+							end
+					end
+					
+					
+					//POS	4
+			//-------------------------------------------------------------------------------
+			PLAYER_CONTROL_4:
+			begin
+					
+						if( (player_cursor_x_reg == 1) &  (player_cursor_y_reg == 0))
+							begin
+								color <= player_missile_color;
+								x = 128;
+								y = 53;
+							end
+						else
+							begin
+								color <= back_color;
+								x = 128;
+								y = 53;
+							end
+					end
+					
+					//POS	5
+			//-------------------------------------------------------------------------------
+			PLAYER_CONTROL_5:
+			begin
+						if( (player_cursor_x_reg == 1) &  (player_cursor_y_reg == 1))
+							begin
+								color <= player_missile_color;
+								x = 128;
+								y = 105;
+							end
+						else
+							begin
+							color <= back_color;
+								x = 128;
+								y = 105;
+							end
+					end
+					//POS	6
+			//-------------------------------------------------------------------------------
+			PLAYER_CONTROL_6:
+			begin
+						if( (player_cursor_x_reg == 1) &  (player_cursor_y_reg == 2))
+							begin
+								color <= player_missile_color;
+								x = 128;
+								y = 158;
+							end
+						else
+							begin
+								color <= back_color;
+								x = 128;
+								y = 158;
+							end
+				end
+				//POS	7
+			//-------------------------------------------------------------------------------
+			PLAYER_CONTROL_7:
+			begin
+						if( (player_cursor_x_reg == 2) &  (player_cursor_y_reg == 0))
+							begin
+								color <= player_missile_color;
+								x = 192;
+								y = 53;
+							end
+						else
+							begin
+							color <= back_color;
+								x = 192;
+								y = 53;
+							end
+				end
+				//POS	8
+			//-------------------------------------------------------------------------------
+		PLAYER_CONTROL_8:
+		begin	
+						if( (player_cursor_x_reg == 2) &  (player_cursor_y_reg == 1))
+							begin
+								color <= player_missile_color;
+								x = 192;
+								y = 105;
+							end
+						else
+							begin
+							color <= back_color;
+								x = 192;
+								y = 105;
+							end
+				end
+					//POS	9
+			//-------------------------------------------------------------------------------	
+			PLAYER_CONTROL_9:
+			begin
+						if( (player_cursor_x_reg == 2) &  (player_cursor_y_reg == 2))
+							begin
+								color <= player_missile_color;
+								x = 192;
+								y = 158;
+							end
+						else
+							begin
+							color <= back_color;
+								x = 192;
+								y = 158;
+							end
+			end
+				//POS	10
+			//-------------------------------------------------------------------------------
+			PLAYER_CONTROL_10:
+			begin
+					
+						if( (player_cursor_x_reg == 3) &  (player_cursor_y_reg == 0))
+							begin
+								color <= player_missile_color;
+								x = 256;
+								y = 53;
+							end
+						else
+							begin
+							color <= back_color;
+								x = 256;
+								y = 53;
+							end
+			end
+					//POS	 11
+			//-------------------------------------------------------------------------------
+			PLAYER_CONTROL_11:
+			begin
+					
+						if( (player_cursor_x_reg == 3) &  (player_cursor_y_reg == 1))
+							begin
+								color <= player_missile_color;
+								x = 256;
+								y = 105;
+							end
+						else
+							begin
+							color <= back_color;
+								x = 256;
+								y = 105;
+							end
+			end
+			//POS	1
+			//-------------------------------------------------------------------------------
+				PLAYER_CONTROL_12:
+			begin
+					
+						if( (player_cursor_x_reg == 3) &  (player_cursor_y_reg == 2))
+							begin
+								color <= player_missile_color;
+								x = 256;
+								y = 158;
+							end
+						else
+							begin
+							color <= back_color;
+								x = 256;
+								y = 158;
+							end
+			end		
+		
+//				//POS	1
+//			//-------------------------------------------------------------------------------
+//				PLAYER_CONTROL_1:
+//					begin
+//					
+//						if(player_1_reg == 0)
 //							begin
 //								color <= player_missile_color;
 //								x = 64;
-//								y = 105;
-//							end
-//						else
-//							begin
-//							color <= back_color;
-//								x = 64;
-//								y = 105;
-//							end
-//					
-//					
-//						if( (player_cursor_x_reg == 0) &  (player_cursor_y_reg == 2))
-//							begin
-//								color <= player_missile_color;
-//								x = 64;
-//								y = 158;
-//							end
-//						else
-//							begin
-//							color <= back_color;
-//								x = 64;
-//								y = 158;
-//							end
-//					
-//					
-//					//Col 2 x =1
-//					//--------------------------------------------------------------------
-//				
-//					
-//						if( (player_cursor_x_reg == 1) &  (player_cursor_y_reg == 0))
-//							begin
-//								color <= player_missile_color;
-//								x = 128;
 //								y = 53;
 //							end
 //						else
 //							begin
-//								color <= back_color;
-//								x = 128;
+//							color <= back_color;
+//								x = 64;
 //								y = 53;
 //							end
-//					
-//					
-//						if( (player_cursor_x_reg == 1) &  (player_cursor_y_reg == 1))
+//					end
+//					//POS	2
+//			//-------------------------------------------------------------------------------
+//			PLAYER_CONTROL_2:
+//			begin
+//						if(player_2_reg == 0)
 //							begin
 //								color <= player_missile_color;
-//								x = 128;
+//								x = 64;
 //								y = 105;
 //							end
 //						else
 //							begin
 //							color <= back_color;
-//								x = 128;
+//								x = 64;
 //								y = 105;
 //							end
+//					end
+//					//POS	3
+//			//-------------------------------------------------------------------------------
+//			PLAYER_CONTROL_3:
+//			begin
 //					
-//						if( (player_cursor_x_reg == 1) &  (player_cursor_y_reg == 2))
+//						if(player_3_reg == 0)
 //							begin
 //								color <= player_missile_color;
-//								x = 128;
+//								x = 64;
 //								y = 158;
 //							end
 //						else
 //							begin
-//								color <= back_color;
-//								x = 128;
+//							color <= back_color;
+//								x = 64;
 //								y = 158;
 //							end
 //					end
-//				//Col 3  x=2
-//				//--------------------------------------------------------------------------
-//				
-//						if( (player_cursor_x_reg == 2) &  (player_cursor_y_reg == 0))
+//					
+//					
+//					//POS	4
+//			//-------------------------------------------------------------------------------
+//			PLAYER_CONTROL_4:
+//			begin
+//					
+//						if(player_4_reg == 0)
+//							begin
+//								color <= player_missile_color;
+//								x = 128;
+//								y = 53;
+//							end
+//						else
+//							begin
+//								color <= back_color;
+//								x = 128;
+//								y = 53;
+//							end
+//					end
+//					
+//					//POS	5
+//			//-------------------------------------------------------------------------------
+//			PLAYER_CONTROL_5:
+//			begin
+//						if(player_5_reg == 0)
+//							begin
+//								color <= player_missile_color;
+//								x = 128;
+//								y = 105;
+//							end
+//						else
+//							begin
+//							color <= back_color;
+//								x = 128;
+//								y = 105;
+//							end
+//					end
+//					//POS	6
+//			//-------------------------------------------------------------------------------
+//			PLAYER_CONTROL_6:
+//			begin
+//						if(player_6_reg == 0)
+//							begin
+//								color <= player_missile_color;
+//								x = 128;
+//								y = 158;
+//							end
+//						else
+//							begin
+//								color <= back_color;
+//								x = 128;
+//								y = 158;
+//							end
+//				end
+//				//POS	7
+//			//-------------------------------------------------------------------------------
+//			PLAYER_CONTROL_7:
+//			begin
+//						if(player_7_reg == 0)
 //							begin
 //								color <= player_missile_color;
 //								x = 192;
@@ -2909,8 +3029,12 @@ module missile_control(
 //								x = 192;
 //								y = 53;
 //							end
-//					
-//						if( (player_cursor_x_reg == 2) &  (player_cursor_y_reg == 1))
+//				end
+//				//POS	8
+//			//-------------------------------------------------------------------------------
+//		PLAYER_CONTROL_8:
+//		begin	
+//						if(player_8_reg == 0)
 //							begin
 //								color <= player_missile_color;
 //								x = 192;
@@ -2922,9 +3046,12 @@ module missile_control(
 //								x = 192;
 //								y = 105;
 //							end
-//					
-//						
-//						if( (player_cursor_x_reg == 2) &  (player_cursor_y_reg == 2))
+//				end
+//					//POS	9
+//			//-------------------------------------------------------------------------------	
+//			PLAYER_CONTROL_9:
+//			begin
+//						if(player_9_reg == 0)
 //							begin
 //								color <= player_missile_color;
 //								x = 192;
@@ -2936,13 +3063,13 @@ module missile_control(
 //								x = 192;
 //								y = 158;
 //							end
+//			end
+//				//POS	10
+//			//-------------------------------------------------------------------------------
+//			PLAYER_CONTROL_10:
+//			begin
 //					
-//						
-//				//Col 4	x=3
-//				//----------------------------------------------------------------------------
-//			
-//					
-//						if( (player_cursor_x_reg == 3) &  (player_cursor_y_reg == 0))
+//						if(player_10_reg == 0)
 //							begin
 //								color <= player_missile_color;
 //								x = 256;
@@ -2954,9 +3081,13 @@ module missile_control(
 //								x = 256;
 //								y = 53;
 //							end
+//			end
+//					//POS	 11
+//			//-------------------------------------------------------------------------------
+//			PLAYER_CONTROL_11:
+//			begin
 //					
-//					
-//						if( (player_cursor_x_reg == 3) &  (player_cursor_y_reg == 1))
+//						if(player_11_reg == 0)
 //							begin
 //								color <= player_missile_color;
 //								x = 256;
@@ -2968,10 +3099,13 @@ module missile_control(
 //								x = 256;
 //								y = 105;
 //							end
+//			end		
+//			//POS	12
+			//-------------------------------------------------------------------------------
+//			PLAYER_CONTROL_12:
+//			begin
 //					
-//			
-//					
-//						if( (player_cursor_x_reg == 3) &  (player_cursor_y_reg == 2))
+//						if(player_12_reg == 0)
 //							begin
 //								color <= player_missile_color;
 //								x = 256;
@@ -2983,9 +3117,10 @@ module missile_control(
 //								x = 256;
 //								y = 158;
 //							end
+//			end	
 					
-					
-				end
+				//end
+				
 				PLAYER_FIRE_CONTROL:
 				begin
 				
@@ -3002,9 +3137,6 @@ module missile_control(
 					if(( missile_1_hot_reg == 1) & (missile_1_target_reg == 0))
 						begin
 							em1_active <= 1'b1;
-							color <= enemy_missile_color;
-					x <= 30;
-					y <= 30;
 						end
 					else
 						begin
